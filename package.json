@@ -1,0 +1,38 @@
+{
+  "name": "tvujkarel",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "ASTRO_TELEMETRY_DISABLED=1 astro dev",
+    "preview": "ASTRO_TELEMETRY_DISABLED=1 astro preview",
+    "check": "ASTRO_TELEMETRY_DISABLED=1 astro check",
+    "check:translations": "node --import tsx scripts/check-translations.ts",
+    "build": "npm run check:translations && ASTRO_TELEMETRY_DISABLED=1 astro build",
+    "test": "node --import tsx --test tests/*.test.ts",
+    "test:e2e": "playwright test",
+    "check:production": "node --import tsx scripts/check-production.ts",
+    "build:production": "npm run check:production && npm run build"
+  },
+  "dependencies": {
+    "@aws-sdk/client-sesv2": "^3.1148.0",
+    "@fontsource-variable/fraunces": "^5.3.0",
+    "@fontsource-variable/lora": "^5.3.0",
+    "@fontsource-variable/manrope": "^5.3.0",
+    "@fontsource/caveat": "^5.3.0",
+    "@phosphor-icons/core": "^2.1.1",
+    "astro": "^7.3.8"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.64.0",
+    "@types/node": "^26.6.4",
+    "lighthouse": "^13.5.0",
+    "tsx": "^4.23.15",
+    "typescript": "^6.0.3"
+  }
+}

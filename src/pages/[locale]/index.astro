@@ -5,25 +5,304 @@ import CallLink from '../../components/CallLink.astro';
 import ContactForm from '../../components/ContactForm.astro';
 import { getDictionary, locales, formatPrice, type Locale } from '../../i18n';
 import { siteConfig, prices } from '../../config/site';
-export function getStaticPaths(){return locales.map(locale=>({params:{locale}}));}
-const locale=Astro.params.locale as Locale;
-const t=getDictionary(locale);
-const serviceAssets:Record<string,string>={computers:'computer',wifi:'wifi',printers:'printer',data:'data',accounts:'email',security:'security',apple:'computer'};
-const priceRows=[{title:t.pricing.hourlyTitle,values:prices.hourly,suffix:t.pricing.perHour},{title:t.pricing.prague6Title,values:prices.travelPrague6,suffix:''},{title:t.pricing.otherPragueTitle,values:prices.travelPragueOther,suffix:''}];
+export function getStaticPaths() {
+  return locales.map((locale) => ({ params: { locale } }));
+}
+const locale = Astro.params.locale as Locale;
+const t = getDictionary(locale);
+const serviceAssets: Record<string, string> = {
+  computers: 'computer',
+  wifi: 'wifi',
+  printers: 'printer',
+  data: 'data',
+  accounts: 'email',
+  security: 'security',
+  apple: 'computer',
+};
+const priceRows = [
+  { title: t.pricing.hourlyTitle, values: prices.hourly, suffix: t.pricing.perHour },
+  { title: t.pricing.prague6Title, values: prices.travelPrague6, suffix: '' },
+  { title: t.pricing.otherPragueTitle, values: prices.travelPragueOther, suffix: '' },
+];
 ---
+
 <Layout locale={locale}>
-  <section class="hero" aria-labelledby="hero-title"><div class="container hero-grid">
-    <div class="hero-copy"><p class="eyebrow">{t.hero.eyebrow}</p><h1 id="hero-title">{t.hero.title}</h1><p class="hero-description">{t.hero.description}</p><div class="hero-actions"><CallLink label={t.hero.primaryCta} /><a class="button button-outline" href="#kontakt">{t.hero.secondaryCta}</a></div><ul class="hero-badges">{t.hero.badges.map(badge=><li>{badge}</li>)}</ul></div>
-    <div class="hero-visual"><img class="hero-image" src="/images/hero.webp" alt={t.hero.imageAlt} width="1200" height="1100" fetchpriority="high" /><div class="printer-inset"><img src="/images/printer.webp" alt="" width="640" height="480" /></div><p class="handwritten hero-note">{t.hero.handwritten}</p></div>
-  </div></section>
-  <section class="about" id="o-znacce" aria-labelledby="about-title"><div class="container about-grid"><div><h2 id="about-title">{t.about.title}</h2><p>{t.about.description}</p></div><div class="about-visual"><img src="/images/workspace.webp" alt={t.about.imageAlt} width="1200" height="900" loading="lazy" /><p class="handwritten">{t.about.note}</p></div></div></section>
-  <section class="section services" id="sluzby" aria-labelledby="services-title"><div class="container"><h2 id="services-title">{t.services.title}</h2><div class="services-grid">{t.services.items.filter(s=>s.id!=='apple'||siteConfig.features.apple).map(service=><article class="service"><img src={`/images/service-${serviceAssets[service.id]}.webp`} alt="" width="256" height="256" loading="lazy" /><div><h3>{service.title}</h3><p>{service.description}</p></div></article>)}</div><p class="section-footnote">{t.services.note}</p></div></section>
-  <section class="section process" id="jak-to-funguje" aria-labelledby="process-title"><div class="container"><div class="section-heading"><h2 id="process-title">{t.process.title}</h2><p>{t.process.eyebrow}</p></div><ol class="steps">{t.process.steps.map((step,i)=><li><div class="step-photo"><span class="step-number handwritten" aria-hidden="true">0{i+1}</span><img src={`/images/step-${['call','plan','help'][i]}.webp`} alt="" width="640" height="480" loading="lazy" />{i<2&&<Icon name="arrow-right" class="step-arrow" />}</div><h3>{step.title}</h3><p>{step.description}</p></li>)}</ol><a class="button" href="#kontakt">{t.hero.secondaryCta}<Icon name="arrow-right" /></a></div></section>
-  <section class="section pricing" id="cenik" aria-labelledby="pricing-title"><div class="container"><div class="section-heading"><p class="handwritten section-annotation">{t.pricing.eyebrow}</p><h2 id="pricing-title">{t.pricing.title}</h2><p>{t.pricing.intro}</p></div>
-    <table class="price-table"><thead><tr><th scope="col">{t.pricing.service}</th><th scope="col">{t.pricing.includingVat}</th><th scope="col">{t.pricing.excludingVat}</th></tr></thead><tbody>{priceRows.map(row=><tr><th scope="row">{row.title}</th><td class="gross">{formatPrice(row.values.gross,locale)}{row.suffix}</td><td>{formatPrice(row.values.net,locale)}{row.suffix}</td></tr>)}</tbody></table>
-    <div class="pricing-rules"><p><strong>{t.pricing.billingNotice}</strong> {t.pricing.minimumNotice}</p>{t.pricing.rules.map(rule=><p>{rule}</p>)}</div>
-    <aside class="price-example"><Icon name="calculator" /><div><h3>{t.pricing.exampleLabel}</h3><p>{t.pricing.example}</p></div></aside><a href="#kontakt" class="button"><Icon name="phone" />{t.pricing.cta}</a>
-  </div></section>
-  <section class="section faq" id="faq" aria-labelledby="faq-title"><div class="container faq-grid"><div class="faq-intro"><h2 id="faq-title">{t.faq.title}</h2><p class="handwritten">{t.faq.eyebrow}</p><img src="/images/workspace.webp" alt="" width="1200" height="900" loading="lazy" /></div><div class="faq-content">{t.faq.items.map((item,i)=><details open={i===0}><summary>{item.question}<Icon name="plus" class="plus" /><Icon name="minus" class="minus" /></summary><div class="faq-answer"><p>{item.answer}{item.pricingLink&&<> <a href="#cenik">{item.pricingLink}</a></>}</p></div></details>)}<div class="faq-cta"><p>{t.faq.intro}</p><a class="button" href="#kontakt">{t.hero.secondaryCta}</a></div></div></div></section>
-  <section class="section contact" id="kontakt" aria-labelledby="contact-title"><div class="container contact-grid"><div class="contact-copy"><h2 id="contact-title">{t.contact.title}</h2><p class="contact-description">{t.contact.description}</p><CallLink label={t.nav.call}/><p class="contact-details">{t.contact.phoneLabel}: {siteConfig.contact.phone?<a href={`tel:${siteConfig.contact.phoneHref}`}>{siteConfig.contact.phone}</a>:<span class="placeholder">{t.contact.phonePlaceholder}</span>}<br />{t.contact.emailLabel}: {siteConfig.contact.email?<a href={`mailto:${siteConfig.contact.email}`}>{siteConfig.contact.email}</a>:<span class="placeholder">{t.contact.emailPlaceholder}</span>}</p>{siteConfig.features.whatsapp&&siteConfig.contact.whatsapp&&<a href={siteConfig.contact.whatsapp}>{t.contact.whatsappLabel}</a>}{siteConfig.contact.availability&&<p>{siteConfig.contact.availability}</p>}<div class="contact-photo"><p class="handwritten">{t.contact.handwritten}</p><img src="/images/hero.webp" alt="" width="1200" height="1100" loading="lazy" /></div></div><ContactForm locale={locale}/></div></section>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">{t.hero.eyebrow}</p>
+        <h1 id="hero-title">{t.hero.title}</h1>
+        <p class="hero-description">{t.hero.description}</p>
+        <div class="hero-actions">
+          <CallLink label={t.hero.primaryCta} />
+          <a class="button button-outline" href="#kontakt">
+            {t.hero.secondaryCta}
+          </a>
+        </div>
+        <ul class="hero-badges">
+          {t.hero.badges.map((badge) => (
+            <li>{badge}</li>
+          ))}
+        </ul>
+      </div>
+      <div class="hero-visual">
+        <picture class="hero-picture">
+          <source
+            type="image/avif"
+            srcset="/images/hero-480.avif 480w, /images/hero-800.avif 800w, /images/hero-1200.avif 1200w"
+            sizes="(max-width: 600px) 100vw, 55vw"
+          />
+          <img
+            class="hero-image"
+            src="/images/hero.webp"
+            srcset="/images/hero-480.webp 480w, /images/hero-800.webp 800w, /images/hero.webp 1200w"
+            sizes="(max-width: 600px) 100vw, 55vw"
+            alt={t.hero.imageAlt}
+            width="1200"
+            height="1100"
+            fetchpriority="high"
+          />
+        </picture>
+        <div class="printer-inset">
+          <img
+            src="/images/printer.webp"
+            srcset="/images/printer-320.webp 320w, /images/printer.webp 640w"
+            sizes="(max-width: 600px) 44vw, 28vw"
+            alt=""
+            width="640"
+            height="480"
+          />
+        </div>
+        <p class="handwritten hero-note">{t.hero.handwritten}</p>
+      </div>
+    </div>
+  </section>
+  <section class="about" id="o-znacce" aria-labelledby="about-title">
+    <div class="container about-grid">
+      <div>
+        <h2 id="about-title">
+          {t.about.title.split(/(?<=\.) /).map((part, i) => (
+            <>
+              {i > 0 && <br />}
+              {part}
+            </>
+          ))}
+        </h2>
+        <p>{t.about.description}</p>
+      </div>
+      <div class="about-visual">
+        <img
+          src="/images/workspace.webp"
+          srcset="/images/workspace-480.webp 480w, /images/workspace-800.webp 800w, /images/workspace.webp 1200w"
+          sizes="(max-width: 600px) 100vw, 50vw"
+          alt={t.about.imageAlt}
+          width="1200"
+          height="900"
+          loading="lazy"
+        />
+        <p class="handwritten">{t.about.note}</p>
+      </div>
+    </div>
+  </section>
+  <section class="section services" id="sluzby" aria-labelledby="services-title">
+    <div class="container">
+      <h2 id="services-title">{t.services.title}</h2>
+      <div class="services-grid">
+        {t.services.items
+          .filter((s) => s.id !== 'apple' || siteConfig.features.apple)
+          .map((service) => (
+            <article class="service">
+              <img
+                class:list={{ 'service-light': serviceAssets[service.id] === 'wifi' }}
+                src={`/images/service-${serviceAssets[service.id]}.webp`}
+                alt=""
+                width="256"
+                height="256"
+                loading="lazy"
+              />
+              {serviceAssets[service.id] === 'wifi' && (
+                <img
+                  class="service-dark"
+                  src="/images/service-wifi-dark.webp"
+                  alt=""
+                  width="256"
+                  height="256"
+                  loading="lazy"
+                />
+              )}
+              <div>
+                <h3>{service.title}</h3>
+                <p>{service.description}</p>
+              </div>
+            </article>
+          ))}
+      </div>
+      <p class="section-footnote">{t.services.note}</p>
+    </div>
+  </section>
+  <section class="section process" id="jak-to-funguje" aria-labelledby="process-title">
+    <div class="container">
+      <div class="section-heading">
+        <h2 id="process-title">{t.process.title}</h2>
+        <p>{t.process.eyebrow}</p>
+      </div>
+      <ol class="steps">
+        {t.process.steps.map((step, i) => (
+          <li>
+            <div class="step-photo">
+              <span class="step-number handwritten" aria-hidden="true">
+                0{i + 1}
+              </span>
+              <img
+                src={`/images/step-${['call', 'plan', 'help'][i]}.webp`}
+                srcset={`/images/step-${['call', 'plan', 'help'][i]}-400.webp 400w, /images/step-${['call', 'plan', 'help'][i]}.webp 640w`}
+                sizes="(max-width: 600px) 100vw, 30vw"
+                alt=""
+                width="640"
+                height="480"
+                loading="lazy"
+              />
+              {i < 2 && <Icon name="arrow-right" class="step-arrow" />}
+            </div>
+            <h3>{step.title}</h3>
+            <p>{step.description}</p>
+          </li>
+        ))}
+      </ol>
+      <a class="button" href="#kontakt">
+        {t.hero.secondaryCta}
+        <Icon name="arrow-right" />
+      </a>
+    </div>
+  </section>
+  <section class="section pricing" id="cenik" aria-labelledby="pricing-title">
+    <div class="container">
+      <div class="section-heading">
+        <p class="handwritten section-annotation">{t.pricing.eyebrow}</p>
+        <h2 id="pricing-title">{t.pricing.title}</h2>
+        <p>{t.pricing.intro}</p>
+      </div>
+      <table class="price-table">
+        <thead>
+          <tr>
+            <th scope="col">{t.pricing.service}</th>
+            <th scope="col">{t.pricing.includingVat}</th>
+            <th scope="col">{t.pricing.excludingVat}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {priceRows.map((row) => (
+            <tr>
+              <th scope="row">{row.title}</th>
+              <td class="gross">
+                {formatPrice(row.values.gross, locale)}
+                {row.suffix}
+              </td>
+              <td>
+                {formatPrice(row.values.net, locale)}
+                {row.suffix}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <div class="pricing-rules">
+        <p>
+          <strong>{t.pricing.billingNotice}</strong> {t.pricing.minimumNotice}
+        </p>
+        {t.pricing.rules.map((rule) => (
+          <p>{rule}</p>
+        ))}
+      </div>
+      <aside class="price-example">
+        <Icon name="calculator" />
+        <div>
+          <h3>{t.pricing.exampleLabel}</h3>
+          <p>{t.pricing.example}</p>
+        </div>
+      </aside>
+      <a href="#kontakt" class="button">
+        <Icon name="phone" />
+        {t.pricing.cta}
+      </a>
+    </div>
+  </section>
+  <section class="section faq" id="faq" aria-labelledby="faq-title">
+    <div class="container faq-grid">
+      <div class="faq-intro">
+        <h2 id="faq-title">{t.faq.title}</h2>
+        <p class="handwritten">{t.faq.eyebrow}</p>
+        <img
+          src="/images/workspace.webp"
+          srcset="/images/workspace-480.webp 480w, /images/workspace-800.webp 800w, /images/workspace.webp 1200w"
+          sizes="(max-width: 600px) 100vw, 50vw"
+          alt=""
+          width="1200"
+          height="900"
+          loading="lazy"
+        />
+      </div>
+      <div class="faq-content">
+        {t.faq.items.map((item, i) => (
+          <details open={i === 0}>
+            <summary>
+              {item.question}
+              <Icon name="plus" class="plus" />
+              <Icon name="minus" class="minus" />
+            </summary>
+            <div class="faq-answer">
+              <p>
+                {item.answer}
+                {item.pricingLink && (
+                  <>
+                    {' '}
+                    <a href="#cenik">{item.pricingLink}</a>
+                  </>
+                )}
+              </p>
+            </div>
+          </details>
+        ))}
+        <div class="faq-cta">
+          <p>{t.faq.intro}</p>
+          <a class="button" href="#kontakt">
+            {t.hero.secondaryCta}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section contact" id="kontakt" aria-labelledby="contact-title">
+    <div class="container contact-grid">
+      <div class="contact-copy">
+        <h2 id="contact-title">{t.contact.title}</h2>
+        <p class="contact-description">{t.contact.description}</p>
+        <CallLink label={t.nav.call} />
+        <p class="contact-details">
+          {t.contact.phoneLabel}:{' '}
+          {siteConfig.contact.phone ? (
+            <a href={`tel:${siteConfig.contact.phoneHref}`}>{siteConfig.contact.phone}</a>
+          ) : (
+            <span class="placeholder">{t.contact.phonePlaceholder}</span>
+          )}
+          <br />
+          {t.contact.emailLabel}:{' '}
+          {siteConfig.contact.email ? (
+            <a href={`mailto:${siteConfig.contact.email}`}>{siteConfig.contact.email}</a>
+          ) : (
+            <span class="placeholder">{t.contact.emailPlaceholder}</span>
+          )}
+        </p>
+        {siteConfig.features.whatsapp && siteConfig.contact.whatsapp && (
+          <a href={siteConfig.contact.whatsapp}>{t.contact.whatsappLabel}</a>
+        )}
+        {siteConfig.contact.availability && <p>{siteConfig.contact.availability}</p>}
+        <div class="contact-photo">
+          <p class="handwritten">{t.contact.handwritten}</p>
+          <img src="/images/hero.webp" alt="" width="1200" height="1100" loading="lazy" />
+        </div>
+      </div>
+      <ContactForm locale={locale} />
+    </div>
+  </section>
 </Layout>

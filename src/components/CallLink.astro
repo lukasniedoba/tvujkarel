@@ -1,7 +1,23 @@
 ---
 import { siteConfig } from '../config/site';
 import Icon from './Icon.astro';
-interface Props { label: string; class?: string; }
-const {label, class:className=''} = Astro.props;
+interface Props {
+  label: string;
+  class?: string;
+}
+const { label, class: className = '' } = Astro.props;
+const locale = Astro.url.pathname.split('/')[1];
+const contactPath = `/${['cs', 'en', 'ru'].includes(locale) ? locale : 'cs'}/#kontakt`;
 ---
-<a class:list={['button', className]} href={siteConfig.contact.phoneHref ? `tel:${siteConfig.contact.phoneHref.replace(/^tel:/, '')}` : '#kontakt'}><Icon name="phone" />{label}</a>
+
+<a
+  class:list={['button', className]}
+  href={
+    siteConfig.contact.phoneHref
+      ? `tel:${siteConfig.contact.phoneHref.replace(/^tel:/, '')}`
+      : contactPath
+  }
+>
+  <Icon name="phone" />
+  {label}
+</a>

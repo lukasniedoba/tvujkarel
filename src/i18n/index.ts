@@ -5,11 +5,23 @@ import { ru } from './ru';
 import { locales, type Dictionary, type Locale, type Page } from './schema';
 
 export { locales } from './schema';
-export type { Dictionary, Locale, Page, ContactField, ApiCode, FieldErrorCode, ServiceId } from './schema';
+export type {
+  Dictionary,
+  Locale,
+  Page,
+  ContactField,
+  ApiCode,
+  FieldErrorCode,
+  ServiceId,
+} from './schema';
 export { formatPrice } from './format';
 
 export const dictionaries: Record<Locale, Dictionary> = { cs, en, ru };
-export const languageNames: Record<Locale, string> = { cs: 'Čeština', en: 'English', ru: 'Русский' };
+export const languageNames: Record<Locale, string> = {
+  cs: 'Čeština',
+  en: 'English',
+  ru: 'Русский',
+};
 
 export function isLocale(value: unknown): value is Locale {
   return typeof value === 'string' && locales.some((locale) => locale === value);

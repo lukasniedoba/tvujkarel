@@ -4,11 +4,11 @@
   "private": true,
   "type": "module",
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=22.19.0"
   },
   "scripts": {
-    "dev": "ASTRO_TELEMETRY_DISABLED=1 astro dev",
-    "preview": "ASTRO_TELEMETRY_DISABLED=1 astro preview",
+    "dev": "ASTRO_TELEMETRY_DISABLED=1 ASTRO_DISABLE_UPDATE_CHECK=true astro dev",
+    "preview": "node --import tsx scripts/preview.ts",
     "check": "ASTRO_TELEMETRY_DISABLED=1 astro check",
     "check:translations": "node --import tsx scripts/check-translations.ts",
     "build": "npm run check:translations && ASTRO_TELEMETRY_DISABLED=1 astro build",
@@ -32,6 +32,9 @@
     "@playwright/test": "^1.64.0",
     "@types/node": "^26.6.4",
     "lighthouse": "^13.5.0",
+    "prettier": "^3.9.9",
+    "prettier-plugin-astro": "^1.1.1",
+    "sharp": "^0.35.5",
     "tsx": "^4.23.15",
     "typescript": "^6.0.3"
   }

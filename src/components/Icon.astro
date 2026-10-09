@@ -1,7 +1,15 @@
 ---
-interface Props { name: string; class?: string; }
+interface Props {
+  name: string;
+  class?: string;
+}
 const { name, class: className = '' } = Astro.props;
-const icons = import.meta.glob('/node_modules/@phosphor-icons/core/assets/regular/*.svg', { query: '?raw', import: 'default', eager: true });
+const icons = import.meta.glob('/node_modules/@phosphor-icons/core/assets/regular/*.svg', {
+  query: '?raw',
+  import: 'default',
+  eager: true,
+});
 const svg = icons[`/node_modules/@phosphor-icons/core/assets/regular/${name}.svg`] as string;
 ---
+
 <span class:list={['icon', className]} aria-hidden="true" set:html={svg} />

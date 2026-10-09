@@ -2,66 +2,244 @@
 import '@fontsource-variable/fraunces';
 import '@fontsource-variable/manrope';
 import '@fontsource-variable/lora';
-import '@fontsource/caveat/latin-ext-500.css';
-import '@fontsource/caveat/latin-500.css';
-import '@fontsource/caveat/cyrillic-500.css';
+import '@fontsource/caveat/500.css';
 import '../styles/global.css';
+import headingLatin from '@fontsource-variable/fraunces/files/fraunces-latin-wght-normal.woff2?url';
+import bodyLatin from '@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2?url';
+import headingCyrillic from '@fontsource-variable/lora/files/lora-cyrillic-wght-normal.woff2?url';
+import bodyCyrillic from '@fontsource-variable/manrope/files/manrope-cyrillic-wght-normal.woff2?url';
+import headingLoraLatin from '@fontsource-variable/lora/files/lora-latin-wght-normal.woff2?url';
+import headingLoraLatinExt from '@fontsource-variable/lora/files/lora-latin-ext-wght-normal.woff2?url';
 import { getDictionary, locales, pagePath, type Locale } from '../i18n';
 import { siteConfig } from '../config/site';
 import Icon from '../components/Icon.astro';
 import CallLink from '../components/CallLink.astro';
-interface Props { locale: Locale; page?: 'home' | 'privacy' | 'notFound'; }
-const {locale, page='home'}=Astro.props;
-const t=getDictionary(locale);
-const home=pagePath(locale);
-const url=new URL(pagePath(locale,page),siteConfig.canonicalUrl).href;
-const title=page==='privacy'?t.privacy.seoTitle:page==='notFound'?t.notFound.seoTitle:t.seo.title;
-const description=page==='privacy'?t.privacy.seoDescription:t.seo.description;
-const nav=[['sluzby',t.nav.services],['jak-to-funguje',t.nav.process],['cenik',t.nav.pricing],['o-znacce',t.nav.about],['kontakt',t.nav.contact]];
-const languageNames={cs:'Čeština',en:'English',ru:'Русский'};
-const noIndex=!siteConfig.production || page==='notFound';
+interface Props {
+  locale: Locale;
+  page?: 'home' | 'privacy' | 'notFound';
+}
+const { locale, page = 'home' } = Astro.props;
+const t = getDictionary(locale);
+const home = pagePath(locale);
+const url = new URL(pagePath(locale, page), siteConfig.canonicalUrl).href;
+const title =
+  page === 'privacy' ? t.privacy.seoTitle : page === 'notFound' ? t.notFound.seoTitle : t.seo.title;
+const description = page === 'privacy' ? t.privacy.seoDescription : t.seo.description;
+const nav = [
+  ['sluzby', t.nav.services],
+  ['jak-to-funguje', t.nav.process],
+  ['cenik', t.nav.pricing],
+  ['o-znacce', t.nav.about],
+  ['kontakt', t.nav.contact],
+];
+const languageNames = { cs: 'Čeština', en: 'English', ru: 'Русский' };
+const noIndex = !siteConfig.production || page === 'notFound';
 ---
+
 <!doctype html>
 <html lang={locale} data-theme="light">
-<head>
-  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#f8f4ea" /><meta name="color-scheme" content="light dark" />
-  <title>{title}</title><meta name="description" content={description} />
-  <meta name="robots" content={noIndex?'noindex, nofollow':'index, follow'} />
-  <link rel="canonical" href={url} />
-  {locales.map(l=><link rel="alternate" hreflang={l} href={new URL(pagePath(l,page),siteConfig.canonicalUrl).href} />)}
-  <link rel="alternate" hreflang="x-default" href={new URL(pagePath('cs',page),siteConfig.canonicalUrl).href} />
-  <meta property="og:type" content="website" /><meta property="og:title" content={title} /><meta property="og:description" content={description} /><meta property="og:url" content={url} />
-  <meta property="og:locale" content={{cs:'cs_CZ',en:'en_GB',ru:'ru_RU'}[locale]} /><meta property="og:image" content={new URL('/images/hero.webp',siteConfig.canonicalUrl).href} /><meta property="og:image:alt" content={t.seo.socialImageAlt} />
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <script is:inline>try{const t=localStorage.getItem('theme');document.documentElement.dataset.theme=t==='light'||t==='dark'?t:matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}catch{}</script>
-  {siteConfig.production && <script type="application/ld+json" set:html={JSON.stringify({'@context':'https://schema.org','@type':'ProfessionalService',name:siteConfig.name,url:siteConfig.canonicalUrl,areaServed:{'@type':'City',name:'Prague'},telephone:siteConfig.contact.phone,email:siteConfig.contact.email,legalName:siteConfig.provider.name,identifier:siteConfig.provider.registrationNumber}).replace(/</g,'\\u003c')} />}
-</head>
-<body>
-  <a class="skip-link" href="#main">{t.a11y.skipToContent}</a>
-  <header class="header" id="top">
-    <div class="container header-inner">
-      <a href={home} class="wordmark" aria-label={t.a11y.logo}>Tvůj Karel<span class="brand-dot">.</span></a>
-      <span class="header-claim handwritten">{t.hero.claim}</span>
-      <nav class="desktop-nav" aria-label={t.a11y.navigation}>{nav.map(([id,label])=><a href={`${home}#${id}`}>{label}</a>)}</nav>
-      <button class="theme-toggle icon-button" aria-label={t.a11y.themeToggle} data-light-label={t.a11y.themeLight} data-dark-label={t.a11y.themeDark}><Icon name="moon" class="moon-icon" /><Icon name="sun" class="sun-icon" /></button>
-      <button class="menu-toggle icon-button" aria-label={t.a11y.openMenu} aria-expanded="false" aria-controls="mobile-menu" data-open-label={t.a11y.openMenu} data-close-label={t.a11y.closeMenu}><Icon name="list" /></button>
-    </div>
-    <div class="container header-secondary">
-      <span class="small-claim">{t.hero.claim}</span>
-      <nav class="languages" aria-label={t.a11y.languageSwitcher}>{locales.map(l=><a href={pagePath(l,page)} lang={l} hreflang={l} aria-current={locale===l?'page':undefined} data-language-link>{languageNames[l]}</a>)}</nav>
-    </div>
-    <nav class="mobile-menu container" id="mobile-menu" aria-label={t.a11y.navigation} hidden>{nav.map(([id,label])=><a href={`${home}#${id}`}>{label}</a>)}</nav>
-  </header>
-  <main id="main"><slot /></main>
-  <footer class="footer" id="footer"><div class="container">
-    <div class="footer-main"><div class="footer-brand"><a class="wordmark" href={home}>Tvůj Karel<span class="brand-dot">.</span></a><p class="handwritten">{t.hero.claim}</p><p>{t.footer.tagline}</p></div>
-      <nav aria-label={t.a11y.navigation}><h2>{t.nav.home}</h2>{nav.map(([id,label])=><a href={`${home}#${id}`}>{label}</a>)}<a href={`${home}#faq`}>{t.faq.title}</a></nav>
-      <div><h2>{t.contact.title}</h2><p>{t.contact.phoneLabel}: {siteConfig.contact.phone?<a href={`tel:${siteConfig.contact.phoneHref}`}>{siteConfig.contact.phone}</a>:<span class="placeholder">{t.contact.phonePlaceholder}</span>}<br />{t.contact.emailLabel}: {siteConfig.contact.email?<a href={`mailto:${siteConfig.contact.email}`}>{siteConfig.contact.email}</a>:<span class="placeholder">{t.contact.emailPlaceholder}</span>}</p><p>{t.contact.area}</p></div>
-    </div>
-    <div class="footer-bottom"><div><p>{t.footer.provider}: {siteConfig.provider.name} · {t.footer.registrationNumber} {siteConfig.provider.registrationNumber} · {t.footer.vatPayer}</p><p>{t.footer.registeredOffice}: {siteConfig.provider.registeredOffice??t.footer.addressPlaceholder}</p></div><div><a href={pagePath(locale,'privacy')}>{t.footer.privacy}</a><p>© {new Date().getFullYear()} Tvůj Karel</p></div></div>
-    {!siteConfig.production&&<p class="preview-note">{t.footer.preview}</p>}
-  </div></footer>
-  <nav class="mobile-contact" aria-label={t.a11y.mobileContact}><CallLink label={t.nav.call}/><a class="button button-outline" href={`${home}#kontakt`}><Icon name="chat-circle-text" />{t.nav.write}</a></nav>
-  <script src="../scripts/site.ts"></script>
-</body></html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f8f4ea" />
+    <meta name="color-scheme" content="light dark" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content={noIndex ? 'noindex, nofollow' : 'index, follow'} />
+    <link rel="canonical" href={url} />
+    {locales.map((l) => (
+      <link
+        rel="alternate"
+        hreflang={l}
+        href={new URL(pagePath(l, page), siteConfig.canonicalUrl).href}
+      />
+    ))}
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href={new URL(pagePath('cs', page), siteConfig.canonicalUrl).href}
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={url} />
+    <meta property="og:locale" content={{ cs: 'cs_CZ', en: 'en_GB', ru: 'ru_RU' }[locale]} />
+    <meta
+      property="og:image"
+      content={new URL('/images/hero.webp', siteConfig.canonicalUrl).href}
+    />
+    <meta property="og:image:alt" content={t.seo.socialImageAlt} />
+    <link
+      rel="preload"
+      href={locale === 'ru' ? headingCyrillic : headingLatin}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href={locale === 'ru' ? bodyCyrillic : bodyLatin}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    {locale === 'ru' &&
+      [headingLoraLatin, headingLoraLatinExt, bodyLatin].map((href) => (
+        <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />
+      ))}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script is:inline>
+      try {
+        const t = localStorage.getItem('theme');
+        document.documentElement.dataset.theme =
+          t === 'light' || t === 'dark'
+            ? t
+            : matchMedia('(prefers-color-scheme: dark)').matches
+              ? 'dark'
+              : 'light';
+      } catch {}
+    </script>
+    {siteConfig.production && (
+      <script
+        type="application/ld+json"
+        set:html={JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'ProfessionalService',
+          name: siteConfig.name,
+          url: siteConfig.canonicalUrl,
+          areaServed: { '@type': 'City', name: 'Prague' },
+          telephone: siteConfig.contact.phone,
+          email: siteConfig.contact.email,
+          legalName: siteConfig.provider.name,
+          identifier: siteConfig.provider.registrationNumber,
+        }).replace(/</g, '\\u003c')}
+      />
+    )}
+  </head>
+  <body>
+    <a class="skip-link" href="#main">
+      {t.a11y.skipToContent}
+    </a>
+    <header class="header" id="top">
+      <div class="container header-inner">
+        <a href={home} class="wordmark" aria-label={t.a11y.logo}>
+          Tvůj Karel
+        </a>
+        <span class="header-claim handwritten">{t.hero.claim}</span>
+        <nav class="desktop-nav" aria-label={t.a11y.navigation}>
+          {nav.map(([id, label]) => (
+            <a href={`${home}#${id}`}>{label}</a>
+          ))}
+        </nav>
+        <CallLink label={t.nav.call} class="header-call" />
+        <button
+          class="theme-toggle icon-button"
+          aria-label={t.a11y.themeToggle}
+          data-light-label={t.a11y.themeLight}
+          data-dark-label={t.a11y.themeDark}
+        >
+          <Icon name="moon" class="moon-icon" />
+          <Icon name="sun" class="sun-icon" />
+        </button>
+        <button
+          class="menu-toggle icon-button"
+          aria-label={t.a11y.openMenu}
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          data-open-label={t.a11y.openMenu}
+          data-close-label={t.a11y.closeMenu}
+        >
+          <Icon name="list" />
+        </button>
+      </div>
+      <div class="container header-secondary">
+        <span class="small-claim">{t.hero.claim}</span>
+        <nav class="languages" aria-label={t.a11y.languageSwitcher}>
+          {locales.map((l) => (
+            <a
+              href={pagePath(l, page)}
+              lang={l}
+              hreflang={l}
+              aria-current={locale === l ? 'page' : undefined}
+              data-language-link
+            >
+              {languageNames[l]}
+            </a>
+          ))}
+        </nav>
+      </div>
+      <nav class="mobile-menu container" id="mobile-menu" aria-label={t.a11y.navigation} hidden>
+        {nav.map(([id, label]) => (
+          <a href={`${home}#${id}`}>{label}</a>
+        ))}
+      </nav>
+    </header>
+    <main id="main">
+      <slot />
+    </main>
+    <footer class="footer" id="footer">
+      <div class="container">
+        <div class="footer-main">
+          <div class="footer-brand">
+            <a class="wordmark" href={home}>
+              Tvůj Karel
+            </a>
+            <p class="handwritten">{t.hero.claim}</p>
+            <p>{t.footer.tagline}</p>
+          </div>
+          <nav aria-label={t.a11y.navigation}>
+            <h2>{t.footer.links}</h2>
+            {nav.map(([id, label]) => (
+              <a href={`${home}#${id}`}>{label}</a>
+            ))}
+            <a href={`${home}#faq`}>{t.faq.title}</a>
+          </nav>
+          <div>
+            <h2>{t.contact.title}</h2>
+            <p>
+              {t.contact.phoneLabel}:{' '}
+              {siteConfig.contact.phone ? (
+                <a href={`tel:${siteConfig.contact.phoneHref}`}>{siteConfig.contact.phone}</a>
+              ) : (
+                <span class="placeholder">{t.contact.phonePlaceholder}</span>
+              )}
+              <br />
+              {t.contact.emailLabel}:{' '}
+              {siteConfig.contact.email ? (
+                <a href={`mailto:${siteConfig.contact.email}`}>{siteConfig.contact.email}</a>
+              ) : (
+                <span class="placeholder">{t.contact.emailPlaceholder}</span>
+              )}
+            </p>
+            <p>{t.contact.area}</p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <div>
+            <p>
+              {t.footer.provider}: {siteConfig.provider.name} · {t.footer.registrationNumber}{' '}
+              {siteConfig.provider.registrationNumber} · {t.footer.vatPayer}
+            </p>
+            <p>
+              {t.footer.registeredOffice}:{' '}
+              {siteConfig.provider.registeredOffice ?? t.footer.addressPlaceholder}
+            </p>
+          </div>
+          <div>
+            <a href={pagePath(locale, 'privacy')}>{t.footer.privacy}</a>
+            <p>© {new Date().getFullYear()} Tvůj Karel</p>
+          </div>
+        </div>
+        {!siteConfig.production && <p class="preview-note">{t.footer.preview}</p>}
+      </div>
+    </footer>
+    <nav class="mobile-contact" aria-label={t.a11y.mobileContact}>
+      <CallLink label={t.nav.call} />
+      <a class="button button-outline" href={`${home}#kontakt`}>
+        <Icon name="chat-circle-text" />
+        {t.nav.write}
+      </a>
+    </nav>
+    <script src="../scripts/site.ts"></script>
+  </body>
+</html>

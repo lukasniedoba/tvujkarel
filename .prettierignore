@@ -1,0 +1,7 @@
+node_modules
+dist
+.astro
+playwright-report
+test-results
+docs/design
+TvujKarel_zadani_webu.md

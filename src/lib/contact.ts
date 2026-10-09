@@ -7,10 +7,19 @@ export const CONTACT_LIMITS = {
   message: { min: 10, max: 3_000 },
 } as const;
 
-export const CONTACT_FIELDS = ['locale', 'name', 'phone', 'email', 'location', 'message', 'website'] as const;
+export const CONTACT_FIELDS = [
+  'locale',
+  'name',
+  'phone',
+  'email',
+  'location',
+  'message',
+  'website',
+] as const;
 export type ContactField = (typeof CONTACT_FIELDS)[number];
 export type ContactLocale = 'cs' | 'en' | 'ru';
-export type ValidationCode = 'REQUIRED' | 'TOO_SHORT' | 'TOO_LONG' | 'INVALID_FORMAT' | 'UNSUPPORTED_LOCALE';
+export type ValidationCode =
+  'REQUIRED' | 'TOO_SHORT' | 'TOO_LONG' | 'INVALID_FORMAT' | 'UNSUPPORTED_LOCALE';
 export type ContactResultCode =
   | 'ACCEPTED'
   | 'VALIDATION_ERROR'
@@ -53,17 +62,24 @@ const messageControls = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F-\u009F]/u
 
 export function isEmailAddress(value: string): boolean {
   // SES does not support SMTPUTF8 local parts; IDN domains can be supplied in ASCII punycode.
-  return characterCount(value) <= CONTACT_LIMITS.email.max
-    && /^[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)+$/.test(value)
-    && !value.startsWith('.') && !value.includes('..') && !value.includes('.@')
-    && value.split('@')[0]!.length <= 64;
+  return (
+    characterCount(value) <= CONTACT_LIMITS.email.max &&
+    /^[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)+$/.test(
+      value,
+    ) &&
+    !value.startsWith('.') &&
+    !value.includes('..') &&
+    !value.includes('.@') &&
+    value.split('@')[0]!.length <= 64
+  );
 }
 
 export function validateContact(input: unknown): ContactValidation {
   const fields: Partial<Record<ContactField, ValidationCode>> = {};
-  const record = input && typeof input === 'object' && !Array.isArray(input)
-    ? input as Record<string, unknown>
-    : {};
+  const record =
+    input && typeof input === 'object' && !Array.isArray(input)
+      ? (input as Record<string, unknown>)
+      : {};
   const data = {} as ContactPayload;
 
   for (const field of CONTACT_FIELDS) {
@@ -85,7 +101,10 @@ export function validateContact(input: unknown): ContactValidation {
       continue;
     }
     data[field] = value;
-    if (invalidUnicode.test(raw) || (field === 'message' ? messageControls : singleLineControls).test(raw)) {
+    if (
+      invalidUnicode.test(raw) ||
+      (field === 'message' ? messageControls : singleLineControls).test(raw)
+    ) {
       fields[field] = 'INVALID_FORMAT';
       continue;
     }

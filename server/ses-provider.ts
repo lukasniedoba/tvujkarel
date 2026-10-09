@@ -3,7 +3,10 @@ import type { ContactPayload } from '../src/lib/contact';
 import type { ContactConfig } from './contact-config';
 import type { MailProvider } from './contact-handler';
 
-export function createSesMessage(config: Pick<ContactConfig, 'sender' | 'recipient'>, contact: ContactPayload): SendEmailCommandInput {
+export function createSesMessage(
+  config: Pick<ContactConfig, 'sender' | 'recipient'>,
+  contact: ContactPayload,
+): SendEmailCommandInput {
   return {
     FromEmailAddress: config.sender,
     Destination: { ToAddresses: [config.recipient] },

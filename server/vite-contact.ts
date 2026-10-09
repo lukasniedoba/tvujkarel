@@ -1,5 +1,5 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
-import { loadEnv, type Plugin, type ResolvedConfig } from 'vite';
+import { loadEnv, type Connect, type Plugin, type ResolvedConfig } from 'vite';
 import { contactConfigFromEnv, type ContactConfig } from './contact-config';
 import { contactResponse, createContactHandler, type ContactHttpResponse } from './contact-handler';
 import { createRateLimiter } from './rate-limit';
@@ -28,9 +28,18 @@ function readBody(request: IncomingMessage, maximum: number): Promise<Uint8Array
       }
       chunks.push(chunk);
     };
-    const onEnd = () => { cleanup(); resolve(Buffer.concat(chunks, size)); };
-    const onError = () => { cleanup(); reject(new Error('Request stream failed')); };
-    const onAborted = () => { cleanup(); reject(new Error('Request aborted')); };
+    const onEnd = () => {
+      cleanup();
+      resolve(Buffer.concat(chunks, size));
+    };
+    const onError = () => {
+      cleanup();
+      reject(new Error('Request stream failed'));
+    };
+    const onAborted = () => {
+      cleanup();
+      reject(new Error('Request aborted'));
+    };
     request.on('data', onData);
     request.on('end', onEnd);
     request.on('error', onError);
@@ -48,58 +57,104 @@ function localOrigin(request: IncomingMessage): string | undefined {
   if (typeof origin !== 'string') return;
   try {
     const parsed = new URL(origin);
-    if (parsed.origin === origin && parsed.protocol === 'http:'
-      && ['localhost', '127.0.0.1', '[::1]'].includes(parsed.hostname)
-      && parsed.host === request.headers.host) return origin;
-  } catch { /* invalid origin remains blocked */ }
+    if (
+      parsed.origin === origin &&
+      parsed.protocol === 'http:' &&
+      ['localhost', '127.0.0.1', '[::1]'].includes(parsed.hostname) &&
+      parsed.host === request.headers.host
+    )
+      return origin;
+  } catch {
+    /* invalid origin remains blocked */
+  }
 }
 
 /** Reuses the Lambda's validation/transport for both Astro dev and static preview. */
 export function contactApiPlugin(): Plugin {
   let viteConfig: ResolvedConfig;
   let config: ContactConfig;
-  const install = (server: { middlewares: { use: (middleware: (request: IncomingMessage, response: ServerResponse, next: () => void) => void) => void } }) => {
-    config = contactConfigFromEnv({ ...loadEnv(viteConfig.mode, viteConfig.envDir, ''), ...process.env });
+  const install = (server: { middlewares: Connect.Server }) => {
+    config = contactConfigFromEnv({
+      ...loadEnv(viteConfig.mode, viteConfig.envDir, ''),
+      ...process.env,
+    });
     const provider = config.mode === 'ses' ? createSesProvider(config) : undefined;
-    const limiter = createRateLimiter({ max: config.rateLimitMax, windowMs: config.rateLimitWindowMs, maxKeys: config.rateLimitMaxKeys });
-    server.middlewares.use(async (request, response, next) => {
-      if (request.url?.split('?')[0] !== '/api/contact') { next(); return; }
-      try {
-        const contentLength = request.headers['content-length'];
-        if (contentLength && (!/^\d+$/.test(contentLength) || Number(contentLength) > config.maxBodyBytes)) {
-          request.resume();
-          respond(response, contactResponse(413, { ok: false, code: 'PAYLOAD_TOO_LARGE' }));
+    const limiter = createRateLimiter({
+      max: config.rateLimitMax,
+      windowMs: config.rateLimitWindowMs,
+      maxKeys: config.rateLimitMaxKeys,
+    });
+    server.middlewares.stack.unshift({
+      route: '',
+      handle: async (
+        request: IncomingMessage,
+        response: ServerResponse,
+        next: Connect.NextFunction,
+      ) => {
+        if (request.url?.split('?')[0] !== '/api/contact') {
+          next();
           return;
         }
-        const inferredOrigin = config.mode === 'disabled' && !config.allowedOrigins.length ? localOrigin(request) : undefined;
-        const handle = createContactHandler({
-          config: inferredOrigin ? { ...config, allowedOrigins: [inferredOrigin] } : config,
-          provider,
-          limiter,
-        });
-        const headers = Object.fromEntries(Object.entries(request.headers).map(([key, value]) => [key, Array.isArray(value) ? value.join(',') : value]));
-        const result = await handle({
-          method: request.method || '',
-          headers,
-          body: await readBody(request, config.maxBodyBytes),
-          // Never trust user-supplied X-Forwarded-For in the local development server.
-          clientAddress: request.socket.remoteAddress || 'unknown',
-        });
-        respond(response, result);
-      } catch (error) {
-        if (!response.headersSent && !response.destroyed) {
-          respond(response, contactResponse(error instanceof PayloadTooLarge ? 413 : 400, {
-            ok: false,
-            code: error instanceof PayloadTooLarge ? 'PAYLOAD_TOO_LARGE' : 'INVALID_REQUEST',
-          }));
+        try {
+          const contentLength = request.headers['content-length'];
+          if (
+            contentLength &&
+            (!/^\d+$/.test(contentLength) || Number(contentLength) > config.maxBodyBytes)
+          ) {
+            request.resume();
+            respond(response, contactResponse(413, { ok: false, code: 'PAYLOAD_TOO_LARGE' }));
+            return;
+          }
+          const inferredOrigin =
+            config.mode === 'disabled' && !config.allowedOrigins.length
+              ? localOrigin(request)
+              : undefined;
+          const handle = createContactHandler({
+            config: inferredOrigin ? { ...config, allowedOrigins: [inferredOrigin] } : config,
+            provider,
+            limiter,
+          });
+          const headers = Object.fromEntries(
+            Object.entries(request.headers).map(([key, value]) => [
+              key,
+              Array.isArray(value) ? value.join(',') : value,
+            ]),
+          );
+          const result = await handle({
+            method: request.method || '',
+            headers,
+            body: await readBody(request, config.maxBodyBytes),
+            // Never trust user-supplied X-Forwarded-For in the local development server.
+            clientAddress: request.socket.remoteAddress || 'unknown',
+          });
+          respond(response, result);
+        } catch (error) {
+          if (!response.headersSent && !response.destroyed) {
+            respond(
+              response,
+              contactResponse(error instanceof PayloadTooLarge ? 413 : 400, {
+                ok: false,
+                code: error instanceof PayloadTooLarge ? 'PAYLOAD_TOO_LARGE' : 'INVALID_REQUEST',
+              }),
+            );
+          }
         }
-      }
+      },
     });
   };
   return {
     name: 'tvuj-karel-contact-api',
-    configResolved(resolved) { viteConfig = resolved; },
-    configureServer: install,
-    configurePreviewServer: install,
+    enforce: 'post',
+    configResolved(resolved) {
+      viteConfig = resolved;
+    },
+    // Astro's slash guard would reject /api/contact before a normal middleware.
+    // Register after Astro's post-hook and prepend the API before that guard.
+    configureServer(server) {
+      return () => install(server);
+    },
+    configurePreviewServer(server) {
+      return () => install(server);
+    },
   };
 }

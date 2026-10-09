@@ -1,6 +1,16 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { getDictionary } from '../i18n';
-const t=getDictionary('cs');
+const t = getDictionary('cs');
 ---
-<Layout locale="cs" page="notFound"><section class="container not-found"><p class="eyebrow">404</p><h1>{t.notFound.title}</h1><p>{t.notFound.description}</p><a href="/cs/" class="button">{t.notFound.cta}</a></section></Layout>
+
+<Layout locale="cs" page="notFound">
+  <section class="container not-found">
+    <p class="eyebrow">404</p>
+    <h1>{t.notFound.title}</h1>
+    <p>{t.notFound.description}</p>
+    <a href="/cs/" class="button">
+      {t.notFound.cta}
+    </a>
+  </section>
+</Layout>

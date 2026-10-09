@@ -1,0 +1,913 @@
+{
+  "measuredAt": "2026-10-09T18:19:59.932Z",
+  "baseUrl": "http://127.0.0.1:4322",
+  "nodeVersion": "v24.15.0",
+  "lighthouseVersion": "13.5.0",
+  "browser": "Playwright Chromium, temporary isolated profile",
+  "chromeFlags": ["--headless=new", "--disable-gpu"],
+  "scope": "Local static preview, default noindex preserved, no deployment or form submission",
+  "targetPassed": true,
+  "results": [
+    {
+      "locale": "cs",
+      "profile": "mobile",
+      "url": "http://127.0.0.1:4322/cs/",
+      "fetchedAt": "2026-10-09T18:19:38.583Z",
+      "htmlSha256": "306df6566b764e1f1160e9103e9f6a04088cd5deab7439eb5333cfb8e5678de9",
+      "lighthouseVersion": "13.5.0",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "environment": {
+        "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36",
+        "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+        "benchmarkIndex": 3974.5,
+        "credits": {
+          "axe-core": "4.13.0"
+        }
+      },
+      "settings": {
+        "formFactor": "mobile",
+        "throttlingMethod": "simulate",
+        "throttling": {
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "requestLatencyMs": 562.5,
+          "downloadThroughputKbps": 1474.5600000000002,
+          "uploadThroughputKbps": 675,
+          "cpuSlowdownMultiplier": 4
+        },
+        "screenEmulation": {
+          "mobile": true,
+          "width": 412,
+          "height": 823,
+          "deviceScaleFactor": 1.75,
+          "disabled": false
+        }
+      },
+      "categories": {
+        "performance": 96,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 69
+      },
+      "metrics": {
+        "first-contentful-paint": {
+          "numericValue": 1802.0644,
+          "numericUnit": "millisecond",
+          "displayValue": "1.8 s"
+        },
+        "largest-contentful-paint": {
+          "numericValue": 2477.5805,
+          "numericUnit": "millisecond",
+          "displayValue": "2.5 s"
+        },
+        "speed-index": {
+          "numericValue": 1802.0644,
+          "numericUnit": "millisecond",
+          "displayValue": "1.8 s"
+        },
+        "total-blocking-time": {
+          "numericValue": 0,
+          "numericUnit": "millisecond",
+          "displayValue": "0 ms"
+        },
+        "cumulative-layout-shift": {
+          "numericValue": 0,
+          "numericUnit": "unitless",
+          "displayValue": "0"
+        }
+      },
+      "totalTransferBytes": 428445,
+      "warnings": [],
+      "failingAudits": [
+        {
+          "id": "first-contentful-paint",
+          "title": "First Contentful Paint",
+          "categories": ["performance"],
+          "score": 0.89,
+          "displayValue": "1.8 s"
+        },
+        {
+          "id": "largest-contentful-paint",
+          "title": "Largest Contentful Paint",
+          "categories": ["performance"],
+          "score": 0.9,
+          "displayValue": "2.5 s"
+        },
+        {
+          "id": "is-crawlable",
+          "title": "Page is blocked from indexing",
+          "categories": ["seo"],
+          "score": 0,
+          "details": [{}, {}]
+        }
+      ],
+      "insights": [
+        {
+          "id": "image-delivery-insight",
+          "title": "Improve image delivery",
+          "displayValue": "Est savings of 140 KiB",
+          "metricSavings": {
+            "FCP": 0,
+            "LCP": 0
+          },
+          "details": [
+            {
+              "url": "http://127.0.0.1:4322/images/workspace-800.webp",
+              "totalBytes": 42212,
+              "wastedBytes": 31140,
+              "node": {
+                "selector": "section#o-znacce > div.container > div.about-visual > img",
+                "snippet": "<img src=\"http://127.0.0.1:4322/images/workspace-800.webp\" srcset=\"/images/workspace-480.webp 480w, /images/workspace-800.webp 800w, /images/…\" sizes=\"(max-width: 600px) 100vw, 50vw\" alt=\"Detail notebooku a pracovního stolu s příslušenstvím\" width=\"1200\" height=\"900\" loading=\"lazy\">"
+              },
+              "subItems": [
+                {
+                  "wastedBytes": 31140
+                }
+              ]
+            },
+            {
+              "url": "http://127.0.0.1:4322/images/step-plan.webp",
+              "totalBytes": 31110,
+              "wastedBytes": 19801,
+              "node": {
+                "selector": "ol.steps > li > div.step-photo > img",
+                "snippet": "<img src=\"/images/step-plan.webp\" srcset=\"/images/step-plan-400.webp 400w, /images/step-plan.webp 640w\" sizes=\"(max-width: 600px) 100vw, 30vw\" alt=\"\" width=\"640\" height=\"480\" loading=\"lazy\">"
+              },
+              "subItems": [
+                {
+                  "wastedBytes": 19801
+                }
+              ]
+            },
+            {
+              "url": "http://127.0.0.1:4322/images/hero-800.avif",
+              "totalBytes": 25775,
+              "wastedBytes": 19429,
+              "node": {
+                "selector": "div.container > div.hero-visual > picture.hero-picture > img.hero-image",
+                "snippet": "<img class=\"hero-image\" src=\"http://127.0.0.1:4322/images/hero-800.avif\" srcset=\"/images/hero-480.webp 480w, /images/hero-800.webp 800w, /images/hero.webp …\" sizes=\"(max-width: 600px) 100vw, 55vw\" alt=\"Notebook, klávesnice a další technika na klidné domácí pracovní ploše\" width=\"1200\" height=\"1100\" fetchpriority=\"high\">"
+              },
+              "subItems": [
+                {
+                  "wastedBytes": 19429
+                }
+              ]
+            },
+            {
+              "url": "http://127.0.0.1:4322/images/step-help.webp",
+              "totalBytes": 27676,
+              "wastedBytes": 17615,
+              "node": {
+                "selector": "ol.steps > li > div.step-photo > img",
+                "snippet": "<img src=\"/images/step-help.webp\" srcset=\"/images/step-help-400.webp 400w, /images/step-help.webp 640w\" sizes=\"(max-width: 600px) 100vw, 30vw\" alt=\"\" width=\"640\" height=\"480\" loading=\"lazy\">"
+              },
+              "subItems": [
+                {
+                  "wastedBytes": 17615
+                }
+              ]
+            },
+            {
+              "url": "http://127.0.0.1:4322/images/step-call.webp",
+              "totalBytes": 25174,
+              "wastedBytes": 16022,
+              "node": {
+                "selector": "ol.steps > li > div.step-photo > img",
+                "snippet": "<img src=\"/images/step-call.webp\" srcset=\"/images/step-call-400.webp 400w, /images/step-call.webp 640w\" sizes=\"(max-width: 600px) 100vw, 30vw\" alt=\"\" width=\"640\" height=\"480\" loading=\"lazy\">"
+              },
+              "subItems": [
+                {
+                  "wastedBytes": 16022
+                }
+              ]
+            },
+            {
+              "url": "http://127.0.0.1:4322/images/service-security.webp",
+              "totalBytes": 8966,
+              "wastedBytes": 7978,
+              "node": {
+                "selector": "div.container > div.services-grid > article.service > img",
+                "snippet": "<img src=\"/images/service-security.webp\" alt=\"\" width=\"256\" height=\"256\" loading=\"lazy\">"
+              },
+              "subItems": [
+                {
+                  "wastedBytes": 7978
+                }
+              ]
+            },
+            {
+              "url": "http://127.0.0.1:4322/images/service-printer.webp",
+              "totalBytes": 7988,
+              "wastedBytes": 7107,
+              "node": {
+                "selector": "div.container > div.services-grid > article.service > img",
+                "snippet": "<img src=\"/images/service-printer.webp\" alt=\"\" width=\"256\" height=\"256\" loading=\"lazy\">"
+              },
+              "subItems": [
+                {
+                  "wastedBytes": 7107
+                }
+              ]
+            },
+            {
+              "url": "http://127.0.0.1:4322/images/service-data.webp",
+              "totalBytes": 7830,
+              "wastedBytes": 6967,
+              "node": {
+                "selector": "div.container > div.services-grid > article.service > img",
+                "snippet": "<img src=\"/images/service-data.webp\" alt=\"\" width=\"256\" height=\"256\" loading=\"lazy\">"
+              },
+              "subItems": [
+                {
+                  "wastedBytes": 6967
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "network-dependency-tree-insight",
+          "title": "Network dependency tree",
+          "metricSavings": {
+            "LCP": 0
+          },
+          "details": [{}, {}, {}]
+        }
+      ]
+    },
+    {
+      "locale": "en",
+      "profile": "mobile",
+      "url": "http://127.0.0.1:4322/en/",
+      "fetchedAt": "2026-10-09T18:19:44.284Z",
+      "htmlSha256": "80912482ae32fe8c5258c152e013b64a19750d88f353995bcc2fd8459663e02a",
+      "lighthouseVersion": "13.5.0",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "environment": {
+        "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36",
+        "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+        "benchmarkIndex": 4274.5,
+        "credits": {
+          "axe-core": "4.13.0"
+        }
+      },
+      "settings": {
+        "formFactor": "mobile",
+        "throttlingMethod": "simulate",
+        "throttling": {
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "requestLatencyMs": 562.5,
+          "downloadThroughputKbps": 1474.5600000000002,
+          "uploadThroughputKbps": 675,
+          "cpuSlowdownMultiplier": 4
+        },
+        "screenEmulation": {
+          "mobile": true,
+          "width": 412,
+          "height": 823,
+          "deviceScaleFactor": 1.75,
+          "disabled": false
+        }
+      },
+      "categories": {
+        "performance": 96,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 69
+      },
+      "metrics": {
+        "first-contentful-paint": {
+          "numericValue": 1802.1141,
+          "numericUnit": "millisecond",
+          "displayValue": "1.8 s"
+        },
+        "largest-contentful-paint": {
+          "numericValue": 2477.1141000000007,
+          "numericUnit": "millisecond",
+          "displayValue": "2.5 s"
+        },
+        "speed-index": {
+          "numericValue": 1802.1141,
+          "numericUnit": "millisecond",
+          "displayValue": "1.8 s"
+        },
+        "total-blocking-time": {
+          "numericValue": 0,
+          "numericUnit": "millisecond",
+          "displayValue": "0 ms"
+        },
+        "cumulative-layout-shift": {
+          "numericValue": 0.00002227572905985105,
+          "numericUnit": "unitless",
+          "displayValue": "0"
+        }
+      },
+      "totalTransferBytes": 407947,
+      "warnings": [],
+      "failingAudits": [
+        {
+          "id": "first-contentful-paint",
+          "title": "First Contentful Paint",
+          "categories": ["performance"],
+          "score": 0.89,
+          "displayValue": "1.8 s"
+        },
+        {
+          "id": "largest-contentful-paint",
+          "title": "Largest Contentful Paint",
+          "categories": ["performance"],
+          "score": 0.9,
+          "displayValue": "2.5 s"
+        },
+        {
+          "id": "is-crawlable",
+          "title": "Page is blocked from indexing",
+          "categories": ["seo"],
+          "score": 0,
+          "details": [{}, {}]
+        }
+      ],
+      "insights": [
+        {
+          "id": "image-delivery-insight",
+          "title": "Improve image delivery",
+          "displayValue": "Est savings of 140 KiB",
+          "metricSavings": {
+            "FCP": 0,
+            "LCP": 150
+          },
+          "details": [
+            {
+              "url": "http://127.0.0.1:4322/images/workspace-800.webp",
+              "totalBytes": 42212,
+              "wastedBytes": 31140,
+              "node": {
+                "selector": "section#o-znacce > div.container > div.about-visual > img",
+                "snippet": "<img src=\"http://127.0.0.1:4322/images/workspace-800.webp\" srcset=\"/images/workspace-480.webp 480w, /images/workspace-800.webp 800w, /images/…\" sizes=\"(max-width: 600px) 100vw, 50vw\" alt=\"Close-up of a laptop and a desk with accessories\" width=\"1200\" height=\"900\" loading=\"lazy\">"
+              },
+              "subItems": [
+                {
+                  "wastedBytes": 31140
+                }
+              ]
+            },
+            {
+              "url": "http://127.0.0.1:4322/images/step-plan.webp",
+              "totalBytes": 31110,
+              "wastedBytes": 19801,
+              "node": {
+                "selector": "ol.steps > li > div.step-photo > img",
+                "snippet": "<img src=\"/images/step-plan.webp\" srcset=\"/images/step-plan-400.webp 400w, /images/step-plan.webp 640w\" sizes=\"(max-width: 600px) 100vw, 30vw\" alt=\"\" width=\"640\" height=\"480\" loading=\"lazy\">"
+              },
+              "subItems": [
+                {
+                  "wastedBytes": 19801
+                }
+              ]
+            },
+            {
+              "url": "http://127.0.0.1:4322/images/hero-800.avif",
+              "totalBytes": 25775,
+              "wastedBytes": 19429,
+              "node": {
+                "selector": "div.container > div.hero-visual > picture.hero-picture > img.hero-image",
+                "snippet": "<img class=\"hero-image\" src=\"http://127.0.0.1:4322/images/hero-800.avif\" srcset=\"/images/hero-480.webp 480w, /images/hero-800.webp 800w, /images/hero.webp …\" sizes=\"(max-width: 600px) 100vw, 55vw\" alt=\"Laptop, keyboard and other technology on a calm home workspace\" width=\"1200\" height=\"1100\" fetchpriority=\"high\">"
+              },
+              "subItems": [
+                {
+                  "wastedBytes": 19429
+                }
+              ]
+            },
+            {
+              "url": "http://127.0.0.1:4322/images/step-help.webp",
+              "totalBytes": 27676,
+              "wastedBytes": 17615,
+              "node": {
+                "selector": "ol.steps > li > div.step-photo > img",
+                "snippet": "<img src=\"/images/step-help.webp\" srcset=\"/images/step-help-400.webp 400w, /images/step-help.webp 640w\" sizes=\"(max-width: 600px) 100vw, 30vw\" alt=\"\" width=\"640\" height=\"480\" loading=\"lazy\">"
+              },
+              "subItems": [
+                {
+                  "wastedBytes": 17615
+                }
+              ]
+            },
+            {
+              "url": "http://127.0.0.1:4322/images/step-call.webp",
+              "totalBytes": 25174,
+              "wastedBytes": 16022,
+              "node": {
+                "selector": "ol.steps > li > div.step-photo > img",
+                "snippet": "<img src=\"/images/step-call.webp\" srcset=\"/images/step-call-400.webp 400w, /images/step-call.webp 640w\" sizes=\"(max-width: 600px) 100vw, 30vw\" alt=\"\" width=\"640\" height=\"480\" loading=\"lazy\">"
+              },
+              "subItems": [
+                {
+                  "wastedBytes": 16022
+                }
+              ]
+            },
+            {
+              "url": "http://127.0.0.1:4322/images/service-security.webp",
+              "totalBytes": 8966,
+              "wastedBytes": 7978,
+              "node": {
+                "selector": "div.container > div.services-grid > article.service > img",
+                "snippet": "<img src=\"/images/service-security.webp\" alt=\"\" width=\"256\" height=\"256\" loading=\"lazy\">"
+              },
+              "subItems": [
+                {
+                  "wastedBytes": 7978
+                }
+              ]
+            },
+            {
+              "url": "http://127.0.0.1:4322/images/service-printer.webp",
+              "totalBytes": 7988,
+              "wastedBytes": 7107,
+              "node": {
+                "selector": "div.container > div.services-grid > article.service > img",
+                "snippet": "<img src=\"/images/service-printer.webp\" alt=\"\" width=\"256\" height=\"256\" loading=\"lazy\">"
+              },
+              "subItems": [
+                {
+                  "wastedBytes": 7107
+                }
+              ]
+            },
+            {
+              "url": "http://127.0.0.1:4322/images/service-data.webp",
+              "totalBytes": 7830,
+              "wastedBytes": 6967,
+              "node": {
+                "selector": "div.container > div.services-grid > article.service > img",
+                "snippet": "<img src=\"/images/service-data.webp\" alt=\"\" width=\"256\" height=\"256\" loading=\"lazy\">"
+              },
+              "subItems": [
+                {
+                  "wastedBytes": 6967
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "network-dependency-tree-insight",
+          "title": "Network dependency tree",
+          "metricSavings": {
+            "LCP": 0
+          },
+          "details": [{}, {}, {}]
+        }
+      ]
+    },
+    {
+      "locale": "ru",
+      "profile": "mobile",
+      "url": "http://127.0.0.1:4322/ru/",
+      "fetchedAt": "2026-10-09T18:19:49.823Z",
+      "htmlSha256": "e8819bfe24d2d6a88988c281222db9a803c68c5b33ce9a8076270a474ec5348f",
+      "lighthouseVersion": "13.5.0",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "environment": {
+        "networkUserAgent": "Mozilla/5.0 (Linux; Android 11; moto g power (2022)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Mobile Safari/537.36",
+        "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+        "benchmarkIndex": 4091,
+        "credits": {
+          "axe-core": "4.13.0"
+        }
+      },
+      "settings": {
+        "formFactor": "mobile",
+        "throttlingMethod": "simulate",
+        "throttling": {
+          "rttMs": 150,
+          "throughputKbps": 1638.4,
+          "requestLatencyMs": 562.5,
+          "downloadThroughputKbps": 1474.5600000000002,
+          "uploadThroughputKbps": 675,
+          "cpuSlowdownMultiplier": 4
+        },
+        "screenEmulation": {
+          "mobile": true,
+          "width": 412,
+          "height": 823,
+          "deviceScaleFactor": 1.75,
+          "disabled": false
+        }
+      },
+      "categories": {
+        "performance": 96,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 69
+      },
+      "metrics": {
+        "first-contentful-paint": {
+          "numericValue": 1652.1091,
+          "numericUnit": "millisecond",
+          "displayValue": "1.7 s"
+        },
+        "largest-contentful-paint": {
+          "numericValue": 2702.1091000000006,
+          "numericUnit": "millisecond",
+          "displayValue": "2.7 s"
+        },
+        "speed-index": {
+          "numericValue": 1652.1091,
+          "numericUnit": "millisecond",
+          "displayValue": "1.7 s"
+        },
+        "total-blocking-time": {
+          "numericValue": 0,
+          "numericUnit": "millisecond",
+          "displayValue": "0 ms"
+        },
+        "cumulative-layout-shift": {
+          "numericValue": 0,
+          "numericUnit": "unitless",
+          "displayValue": "0"
+        }
+      },
+      "totalTransferBytes": 464839,
+      "warnings": [],
+      "failingAudits": [
+        {
+          "id": "first-contentful-paint",
+          "title": "First Contentful Paint",
+          "categories": ["performance"],
+          "score": 0.93,
+          "displayValue": "1.7 s"
+        },
+        {
+          "id": "largest-contentful-paint",
+          "title": "Largest Contentful Paint",
+          "categories": ["performance"],
+          "score": 0.85,
+          "displayValue": "2.7 s"
+        },
+        {
+          "id": "is-crawlable",
+          "title": "Page is blocked from indexing",
+          "categories": ["seo"],
+          "score": 0,
+          "details": [{}, {}]
+        }
+      ],
+      "insights": [
+        {
+          "id": "image-delivery-insight",
+          "title": "Improve image delivery",
+          "displayValue": "Est savings of 140 KiB",
+          "metricSavings": {
+            "FCP": 0,
+            "LCP": 150
+          },
+          "details": [
+            {
+              "url": "http://127.0.0.1:4322/images/workspace-800.webp",
+              "totalBytes": 42212,
+              "wastedBytes": 31140,
+              "node": {
+                "selector": "section#o-znacce > div.container > div.about-visual > img",
+                "snippet": "<img src=\"http://127.0.0.1:4322/images/workspace-800.webp\" srcset=\"/images/workspace-480.webp 480w, /images/workspace-800.webp 800w, /images/…\" sizes=\"(max-width: 600px) 100vw, 50vw\" alt=\"Ноутбук и рабочий стол с принадлежностями крупным планом\" width=\"1200\" height=\"900\" loading=\"lazy\">"
+              },
+              "subItems": [
+                {
+                  "wastedBytes": 31140
+                }
+              ]
+            },
+            {
+              "url": "http://127.0.0.1:4322/images/step-plan.webp",
+              "totalBytes": 31110,
+              "wastedBytes": 19801,
+              "node": {
+                "selector": "ol.steps > li > div.step-photo > img",
+                "snippet": "<img src=\"/images/step-plan.webp\" srcset=\"/images/step-plan-400.webp 400w, /images/step-plan.webp 640w\" sizes=\"(max-width: 600px) 100vw, 30vw\" alt=\"\" width=\"640\" height=\"480\" loading=\"lazy\">"
+              },
+              "subItems": [
+                {
+                  "wastedBytes": 19801
+                }
+              ]
+            },
+            {
+              "url": "http://127.0.0.1:4322/images/hero-800.avif",
+              "totalBytes": 25775,
+              "wastedBytes": 19429,
+              "node": {
+                "selector": "div.container > div.hero-visual > picture.hero-picture > img.hero-image",
+                "snippet": "<img class=\"hero-image\" src=\"http://127.0.0.1:4322/images/hero-800.avif\" srcset=\"/images/hero-480.webp 480w, /images/hero-800.webp 800w, /images/hero.webp …\" sizes=\"(max-width: 600px) 100vw, 55vw\" alt=\"Ноутбук, клавиатура и другая техника на уютном домашнем рабочем столе\" width=\"1200\" height=\"1100\" fetchpriority=\"high\">"
+              },
+              "subItems": [
+                {
+                  "wastedBytes": 19429
+                }
+              ]
+            },
+            {
+              "url": "http://127.0.0.1:4322/images/step-help.webp",
+              "totalBytes": 27676,
+              "wastedBytes": 17615,
+              "node": {
+                "selector": "ol.steps > li > div.step-photo > img",
+                "snippet": "<img src=\"/images/step-help.webp\" srcset=\"/images/step-help-400.webp 400w, /images/step-help.webp 640w\" sizes=\"(max-width: 600px) 100vw, 30vw\" alt=\"\" width=\"640\" height=\"480\" loading=\"lazy\">"
+              },
+              "subItems": [
+                {
+                  "wastedBytes": 17615
+                }
+              ]
+            },
+            {
+              "url": "http://127.0.0.1:4322/images/step-call.webp",
+              "totalBytes": 25174,
+              "wastedBytes": 16022,
+              "node": {
+                "selector": "ol.steps > li > div.step-photo > img",
+                "snippet": "<img src=\"/images/step-call.webp\" srcset=\"/images/step-call-400.webp 400w, /images/step-call.webp 640w\" sizes=\"(max-width: 600px) 100vw, 30vw\" alt=\"\" width=\"640\" height=\"480\" loading=\"lazy\">"
+              },
+              "subItems": [
+                {
+                  "wastedBytes": 16022
+                }
+              ]
+            },
+            {
+              "url": "http://127.0.0.1:4322/images/service-security.webp",
+              "totalBytes": 8966,
+              "wastedBytes": 7978,
+              "node": {
+                "selector": "div.container > div.services-grid > article.service > img",
+                "snippet": "<img src=\"/images/service-security.webp\" alt=\"\" width=\"256\" height=\"256\" loading=\"lazy\">"
+              },
+              "subItems": [
+                {
+                  "wastedBytes": 7978
+                }
+              ]
+            },
+            {
+              "url": "http://127.0.0.1:4322/images/service-printer.webp",
+              "totalBytes": 7988,
+              "wastedBytes": 7107,
+              "node": {
+                "selector": "div.container > div.services-grid > article.service > img",
+                "snippet": "<img src=\"/images/service-printer.webp\" alt=\"\" width=\"256\" height=\"256\" loading=\"lazy\">"
+              },
+              "subItems": [
+                {
+                  "wastedBytes": 7107
+                }
+              ]
+            },
+            {
+              "url": "http://127.0.0.1:4322/images/service-data.webp",
+              "totalBytes": 7830,
+              "wastedBytes": 6967,
+              "node": {
+                "selector": "div.container > div.services-grid > article.service > img",
+                "snippet": "<img src=\"/images/service-data.webp\" alt=\"\" width=\"256\" height=\"256\" loading=\"lazy\">"
+              },
+              "subItems": [
+                {
+                  "wastedBytes": 6967
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "network-dependency-tree-insight",
+          "title": "Network dependency tree",
+          "metricSavings": {
+            "LCP": 0
+          },
+          "details": [{}, {}, {}]
+        }
+      ]
+    },
+    {
+      "locale": "cs",
+      "profile": "desktop",
+      "url": "http://127.0.0.1:4322/cs/",
+      "fetchedAt": "2026-10-09T18:19:55.387Z",
+      "htmlSha256": "306df6566b764e1f1160e9103e9f6a04088cd5deab7439eb5333cfb8e5678de9",
+      "lighthouseVersion": "13.5.0",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+      "environment": {
+        "networkUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.0.0 Safari/537.36",
+        "hostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+        "benchmarkIndex": 4000,
+        "credits": {
+          "axe-core": "4.13.0"
+        }
+      },
+      "settings": {
+        "formFactor": "desktop",
+        "throttlingMethod": "simulate",
+        "throttling": {
+          "rttMs": 40,
+          "throughputKbps": 10240,
+          "requestLatencyMs": 0,
+          "downloadThroughputKbps": 0,
+          "uploadThroughputKbps": 0,
+          "cpuSlowdownMultiplier": 1
+        },
+        "screenEmulation": {
+          "mobile": false,
+          "width": 1350,
+          "height": 940,
+          "deviceScaleFactor": 1,
+          "disabled": false
+        }
+      },
+      "categories": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 69
+      },
+      "metrics": {
+        "first-contentful-paint": {
+          "numericValue": 403.334,
+          "numericUnit": "millisecond",
+          "displayValue": "0.4 s"
+        },
+        "largest-contentful-paint": {
+          "numericValue": 625.001,
+          "numericUnit": "millisecond",
+          "displayValue": "0.6 s"
+        },
+        "speed-index": {
+          "numericValue": 403.334,
+          "numericUnit": "millisecond",
+          "displayValue": "0.4 s"
+        },
+        "total-blocking-time": {
+          "numericValue": 0,
+          "numericUnit": "millisecond",
+          "displayValue": "0 ms"
+        },
+        "cumulative-layout-shift": {
+          "numericValue": 0.0006705757640120174,
+          "numericUnit": "unitless",
+          "displayValue": "0.001"
+        }
+      },
+      "totalTransferBytes": 445187,
+      "warnings": [],
+      "failingAudits": [
+        {
+          "id": "largest-contentful-paint",
+          "title": "Largest Contentful Paint",
+          "categories": ["performance"],
+          "score": 0.99,
+          "displayValue": "0.6 s"
+        },
+        {
+          "id": "is-crawlable",
+          "title": "Page is blocked from indexing",
+          "categories": ["seo"],
+          "score": 0,
+          "details": [{}, {}]
+        }
+      ],
+      "insights": [
+        {
+          "id": "image-delivery-insight",
+          "title": "Improve image delivery",
+          "displayValue": "Est savings of 97 KiB",
+          "metricSavings": {
+            "FCP": 0,
+            "LCP": 0
+          },
+          "details": [
+            {
+              "url": "http://127.0.0.1:4322/images/printer.webp",
+              "totalBytes": 25130,
+              "wastedBytes": 17572,
+              "node": {
+                "selector": "div.container > div.hero-visual > div.printer-inset > img",
+                "snippet": "<img src=\"/images/printer.webp\" srcset=\"/images/printer-320.webp 320w, /images/printer.webp 640w\" sizes=\"(max-width: 600px) 44vw, 28vw\" alt=\"\" width=\"640\" height=\"480\">"
+              },
+              "subItems": [
+                {
+                  "wastedBytes": 17572
+                }
+              ]
+            },
+            {
+              "url": "http://127.0.0.1:4322/images/step-plan.webp",
+              "totalBytes": 31110,
+              "wastedBytes": 15513,
+              "node": {
+                "selector": "ol.steps > li > div.step-photo > img",
+                "snippet": "<img src=\"/images/step-plan.webp\" srcset=\"/images/step-plan-400.webp 400w, /images/step-plan.webp 640w\" sizes=\"(max-width: 600px) 100vw, 30vw\" alt=\"\" width=\"640\" height=\"480\" loading=\"lazy\">"
+              },
+              "subItems": [
+                {
+                  "wastedBytes": 15513
+                }
+              ]
+            },
+            {
+              "url": "http://127.0.0.1:4322/images/step-help.webp",
+              "totalBytes": 27676,
+              "wastedBytes": 13801,
+              "node": {
+                "selector": "ol.steps > li > div.step-photo > img",
+                "snippet": "<img src=\"/images/step-help.webp\" srcset=\"/images/step-help-400.webp 400w, /images/step-help.webp 640w\" sizes=\"(max-width: 600px) 100vw, 30vw\" alt=\"\" width=\"640\" height=\"480\" loading=\"lazy\">"
+              },
+              "subItems": [
+                {
+                  "wastedBytes": 13801
+                }
+              ]
+            },
+            {
+              "url": "http://127.0.0.1:4322/images/step-call.webp",
+              "totalBytes": 25174,
+              "wastedBytes": 12553,
+              "node": {
+                "selector": "ol.steps > li > div.step-photo > img",
+                "snippet": "<img src=\"/images/step-call.webp\" srcset=\"/images/step-call-400.webp 400w, /images/step-call.webp 640w\" sizes=\"(max-width: 600px) 100vw, 30vw\" alt=\"\" width=\"640\" height=\"480\" loading=\"lazy\">"
+              },
+              "subItems": [
+                {
+                  "wastedBytes": 12553
+                }
+              ]
+            },
+            {
+              "url": "http://127.0.0.1:4322/images/service-security.webp",
+              "totalBytes": 8966,
+              "wastedBytes": 7978,
+              "node": {
+                "selector": "div.container > div.services-grid > article.service > img",
+                "snippet": "<img src=\"/images/service-security.webp\" alt=\"\" width=\"256\" height=\"256\" loading=\"lazy\">"
+              },
+              "subItems": [
+                {
+                  "wastedBytes": 7978
+                }
+              ]
+            },
+            {
+              "url": "http://127.0.0.1:4322/images/service-printer.webp",
+              "totalBytes": 7988,
+              "wastedBytes": 7107,
+              "node": {
+                "selector": "div.container > div.services-grid > article.service > img",
+                "snippet": "<img src=\"/images/service-printer.webp\" alt=\"\" width=\"256\" height=\"256\" loading=\"lazy\">"
+              },
+              "subItems": [
+                {
+                  "wastedBytes": 7107
+                }
+              ]
+            },
+            {
+              "url": "http://127.0.0.1:4322/images/service-data.webp",
+              "totalBytes": 7830,
+              "wastedBytes": 6967,
+              "node": {
+                "selector": "div.container > div.services-grid > article.service > img",
+                "snippet": "<img src=\"/images/service-data.webp\" alt=\"\" width=\"256\" height=\"256\" loading=\"lazy\">"
+              },
+              "subItems": [
+                {
+                  "wastedBytes": 6967
+                }
+              ]
+            },
+            {
+              "url": "http://127.0.0.1:4322/images/service-email.webp",
+              "totalBytes": 7334,
+              "wastedBytes": 6525,
+              "node": {
+                "selector": "div.container > div.services-grid > article.service > img",
+                "snippet": "<img src=\"/images/service-email.webp\" alt=\"\" width=\"256\" height=\"256\" loading=\"lazy\">"
+              },
+              "subItems": [
+                {
+                  "wastedBytes": 6525
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "network-dependency-tree-insight",
+          "title": "Network dependency tree",
+          "metricSavings": {
+            "LCP": 0
+          },
+          "details": [{}, {}, {}]
+        }
+      ]
+    }
+  ]
+}

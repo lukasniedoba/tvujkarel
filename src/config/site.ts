@@ -1,6 +1,12 @@
 /** Public configuration only. Server secrets must never be imported here. */
-const publicEnv = (import.meta as ImportMeta & { env?: Record<string, string | boolean | undefined> }).env ?? {};
-const optionalString = (value: string | boolean | undefined): string | null => typeof value === 'string' && value.trim() ? value.trim() : null;
+const publicEnv =
+  (import.meta as ImportMeta & { env?: Record<string, string | boolean | undefined> }).env ?? {};
+const optionalString = (value: string | boolean | undefined): string | null =>
+  typeof value === 'string' && value.trim() ? value.trim() : null;
+// The site base is an origin. A conventional trailing slash must not create
+// double-slash page URLs in metadata, sitemaps or robots.txt.
+const canonicalOrigin = new URL(optionalString(publicEnv.PUBLIC_SITE_URL) ?? 'https://tvujkarel.cz')
+  .origin;
 
 export const prices = {
   currency: 'CZK',
@@ -15,7 +21,7 @@ export const prices = {
 
 export const siteConfig = {
   name: 'Tvůj Karel',
-  canonicalUrl: optionalString(publicEnv.PUBLIC_SITE_URL) ?? 'https://tvujkarel.cz',
+  canonicalUrl: canonicalOrigin,
   locales: ['cs', 'en', 'ru'],
   defaultLocale: 'cs',
   production: publicEnv.PUBLIC_SITE_MODE === 'production',

@@ -6,7 +6,7 @@ Aktuální rozsah je **lokální implementace a ověřování**. Nasazení je na
 
 ## Lokální spuštění
 
-Použijte Node.js 22.12 nebo novější a npm. Závislosti jsou zamčené v `package-lock.json`.
+Použijte Node.js 22.19 nebo novější a npm. Závislosti jsou zamčené v `package-lock.json`.
 
 ```sh
 npm ci
@@ -33,7 +33,7 @@ npm run preview
 Testy v prohlížeči:
 
 ```sh
-npx playwright install chromium
+npx playwright install chromium webkit
 npm run test:e2e
 ```
 
@@ -45,13 +45,13 @@ npm run check:production
 
 S výchozím `.env.example` má tato kontrola **záměrně skončit chybou**. Vyžaduje produkční režim, skutečné kontakty a sídlo, poskytovatele schránky, schválená pravidla uchování, nakonfigurovaný SES transport, HTTPS origin a zaznamenaná potvrzení připravenosti. Sama nikdy nekontaktuje AWS ani neposílá e-mail. Umí odmítnout chybějící nebo běžné ukázkové hodnoty; skutečnou funkčnost telefonu, pravdivost identifikačních údajů ani doručení do schránky nelze ověřit pouhou kontrolou řetězců.
 
-Kontrola čte `.env`, `.env.local`, `.env.production`, `.env.production.local` v tomto pořadí; proměnné procesu mají přednost. Uvádějte doslovné hodnoty bez interpolace dalších proměnných. Běžný preview build se dá vytvořit i s nevyplněnými údaji. Produkční sestavení musí používat tento gate a kontrolu překladů před zveřejněním.
+Kontrola čte `.env`, `.env.local`, `.env.production`, `.env.production.local` v tomto pořadí; proměnné procesu mají přednost. Uvádějte doslovné hodnoty bez interpolace dalších proměnných. Běžný preview build se dá vytvořit i s nevyplněnými údaji. Při `PUBLIC_SITE_MODE=production` se gate spouští automaticky i při přímém `astro build`; neúplná konfigurace sestavení zastaví.
 
 ## Obsah a konfigurace
 
 - `src/config/site.ts`: značka, jazykové URL, společné ceny, poskytovatel, kontakty a přepínače služeb. Telefon pro zobrazení a `PUBLIC_PHONE_TEL` musí označovat stejné číslo; normalizovaná hodnota začíná `+` a neobsahuje prefix `tel:`.
 - `src/i18n/`: české, anglické a ruské slovníky a jejich společná typovaná struktura. Změny významu provádějte ve všech jazycích. Chybějící překlad neřešte českým fallbackem pod cizojazyčnou URL.
-- `public/images/`: sdílené optimalizované WebP fotografie vytvořené pro tento vizuální směr. Obrázky nejsou pod jazykovými prefixy. Před veřejným spuštěním musí být jejich použití schválené.
+- `public/images/`: sdílené fotografie vytvořené pomocí ImageGen pro tento vizuální směr, optimalizované do WebP/AVIF. Obrázky nejsou pod jazykovými prefixy. Responzivní velikosti obnoví `node scripts/optimize-images.mjs`. Před veřejným spuštěním musí být jejich použití schválené.
 - `src/lib/contact.ts`: společné limity a validace formuláře; délky textu se počítají v Unicode code points, velikost požadavku v bajtech.
 - `server/`: kontaktní handler, konfigurace, ochrana proti nadměrnému odesílání, lokální Vite integrace a adaptér Lambda pro API Gateway HTTP API v2.
 
@@ -79,4 +79,16 @@ Postup nasazení a návratu na předchozí verzi bude doplněn až s konkrétní
 
 ## Stav ověření
 
-Lokálně byl ověřen produkční validátor: výchozí `.env.example` odmítl kvůli 16 chybějícím nebo vypnutým nastavením, úplnou syntetickou konfiguraci přijal a osm neplatných variant odmítl. Tento test neprovedl síťové volání ani odeslání zprávy. Výsledky dalších konkrétních běhů kontrol uvádí předání změn; samotný seznam příkazů výše není potvrzením, že prošly. S výchozími chybějícími údaji je očekávaným výsledkem produkčního gate odmítnutí. Živé SES, doručení e-mailů, DNS, CloudFront a placené cloudové služby nebyly v rámci lokálního zadání ověřovány. Produkční Lighthouse a skutečné Safari / mobilní prohlížeče vyžadují samostatné doložené měření; simulace rozměrů nebo automatizovaný Chromium test toto měření nenahrazují.
+Doklady vizuální kontroly a její opravy jsou v [design-qa.md](design-qa.md), snímky v [docs/verification](docs/verification). Automatizované testy pokrývají Chromium i WebKit, všechny tři jazyky, světlý/tmavý režim, šířky 360/390/768/1024/1440 px, navigaci, přístupnost a stavy formuláře. Odeslání v úspěšných testech používá kontrolovaný testovací adaptér; žádná zpráva zákazníkovi ani skutečné schránce odeslaná nebyla.
+
+[Lighthouse report](docs/verification/lighthouse.md) zaznamenává mobilní výkon 96 ve všech třech jazycích a desktop 100; Accessibility a Best Practices jsou 100. Náhled má záměrně `noindex`, proto SEO dosahuje 69. Reprodukce nad statickým buildem:
+
+```sh
+npm run build
+npm run preview -- --host 127.0.0.1 --port 4322
+# V druhém terminálu:
+PLAYWRIGHT_BASE_URL=http://127.0.0.1:4322 npm run test:e2e
+node scripts/audit-lighthouse.mjs --url http://127.0.0.1:4322 --desktop-locales cs
+```
+
+Lokálně byl ověřen i produkční validátor: výchozí náhledovou konfiguraci odmítl, úplnou syntetickou konfiguraci přijal a neplatné varianty odmítl. Přímý build s produkčním režimem a chybějícími údaji rovněž skončil očekávanou chybou. Tyto kontroly neprovedly síťové volání ani odeslání zprávy. Živé SES, doručení e-mailů, DNS, CloudFront a placené cloudové služby nebyly v rámci lokálního zadání ověřovány. Produkční Lighthouse a skutečné Safari / mobilní prohlížeče vyžadují samostatné měření; automatizovaný WebKit a simulace rozměrů je nenahrazují.

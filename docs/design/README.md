@@ -19,6 +19,18 @@ Ikona slunce vpravo v hlavičce představuje přepnutí do světlého režimu.
 
 ![Referenční vizuál tmavého režimu](reference/dark-mode.png)
 
+## Další sekce
+
+Doplněno 9. 10. 2026: zbývající sekce hlavní stránky ve stejném vizuálním směru. [Celý přehled s náhledy](sections.md) a [prompty pro generování](section-prompts.md).
+
+| Sekce | Světlý režim | Tmavý režim |
+| --- | --- | --- |
+| Jak to funguje | [PNG](reference/sections/how-it-works-light.png) | [PNG](reference/sections/how-it-works-dark.png) |
+| Ceník | [PNG](reference/sections/pricing-light.png) | [PNG](reference/sections/pricing-dark.png) |
+| Časté otázky | [PNG](reference/sections/faq-light.png) | [PNG](reference/sections/faq-dark.png) |
+| Kontakt a formulář | [PNG](reference/sections/contact-light.png) | [PNG](reference/sections/contact-dark.png) |
+| Patička | [PNG](reference/sections/footer-light.png) | [PNG](reference/sections/footer-dark.png) |
+
 ## Pokyny pro implementaci
 
 - Zachovat rozložení, typografii, organické výřezy fotografií a přátelský tón vybraného návrhu.
@@ -32,4 +44,4 @@ Ikona slunce vpravo v hlavičce představuje přepnutí do světlého režimu.
 - U použitých fontů a řezů ověřit českou diakritiku i cyrilici; pro ruštinu případně zvolit odpovídající font, který zachová typografický styl návrhu.
 - Při implementaci ověřit kontrast, ovládání klávesnicí a mobilní rozložení v obou režimech.
 
-PNG soubory jsou návrhy vytvořené pomocí vestavěného ImageGen; [zadání poslední úpravy](revision-prompts.md) je uložené pro dohledatelnost. Slouží jako vizuální reference; veřejné texty a rozsah služeb mají odpovídat zadání webu. Obrázky zachycují úvodní část, další sekce a jazykový přepínač doplnit podle zadání.
+PNG soubory jsou návrhy vytvořené pomocí vestavěného ImageGen; [zadání úpravy úvodní reference](revision-prompts.md) je uložené pro dohledatelnost. Slouží jako vizuální reference; veřejné texty a rozsah služeb mají odpovídat zadání webu. Úvod a jednotlivé další sekce skládat jako jeden web. Jazykový přepínač, překlady a mobilní rozložení doplnit podle zadání.

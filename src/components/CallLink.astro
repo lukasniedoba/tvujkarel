@@ -1,0 +1,7 @@
+---
+import { siteConfig } from '../config/site';
+import Icon from './Icon.astro';
+interface Props { label: string; class?: string; }
+const {label, class:className=''} = Astro.props;
+---
+<a class:list={['button', className]} href={siteConfig.contact.phoneHref ? `tel:${siteConfig.contact.phoneHref.replace(/^tel:/, '')}` : '#kontakt'}><Icon name="phone" />{label}</a>

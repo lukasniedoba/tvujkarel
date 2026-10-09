@@ -1,0 +1,7 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getDictionary, locales, pagePath, type Locale } from '../../i18n';
+export function getStaticPaths(){return locales.map(locale=>({params:{locale}}));}
+const locale=Astro.params.locale as Locale;const t=getDictionary(locale);
+---
+<Layout locale={locale} page="notFound"><section class="container not-found"><p class="eyebrow">404</p><h1>{t.notFound.title}</h1><p>{t.notFound.description}</p><a href={pagePath(locale)} class="button">{t.notFound.cta}</a></section></Layout>

@@ -1,0 +1,8 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getDictionary, locales, pagePath, type Locale } from '../../i18n';
+import { siteConfig } from '../../config/site';
+export function getStaticPaths(){return locales.map(locale=>({params:{locale}}));}
+const locale=Astro.params.locale as Locale;const t=getDictionary(locale);
+---
+<Layout locale={locale} page="privacy"><article class="container legal"><p class="eyebrow">Tvůj Karel</p><h1>{t.privacy.title}</h1><p class="legal-intro">{t.privacy.intro}</p>{!siteConfig.privacy.approved&&<aside class="notice">{t.privacy.draftNotice}</aside>}{t.privacy.sections.map(section=><section><h2>{section.title}</h2>{section.paragraphs.map(p=><p>{p}</p>)}</section>)}<a href={pagePath(locale)} class="button">{t.privacy.backHome}</a></article></Layout>

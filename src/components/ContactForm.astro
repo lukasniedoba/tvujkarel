@@ -1,0 +1,25 @@
+---
+import { getDictionary, pagePath, type Locale } from '../i18n';
+import { siteConfig } from '../config/site';
+import Icon from './Icon.astro';
+interface Props { locale: Locale }
+const { locale }=Astro.props;
+const t=getDictionary(locale);
+const fields=['name','phone','email','location'] as const;
+---
+<form id="contact-form" class="contact-form" novalidate data-locale={locale}>
+  <h2>{t.contact.formTitle}</h2>
+  {!siteConfig.production&&<p class="form-preview"><Icon name="info" />{t.contact.previewNotice}</p>}
+  <div class="form-grid">{fields.map(field=><div class="form-field">
+    <label for={field}>{t.form.fields[field].label}{field!=='email'&&<span class="required" aria-hidden="true"> *</span>}</label>
+    <input id={field} name={field} type={field==='email'?'email':field==='phone'?'tel':'text'} autocomplete={field==='name'?'name':field==='phone'?'tel':field==='email'?'email':'address-level2'} required={field!=='email'} placeholder={t.form.fields[field].placeholder} aria-describedby={`${field}-error`} />
+    <span id={`${field}-error`} class="field-error" hidden></span>
+  </div>)}</div>
+  <div class="form-field"><label for="message">{t.form.fields.message.label}<span class="required" aria-hidden="true"> *</span></label><textarea id="message" name="message" rows="6" required placeholder={t.form.fields.message.placeholder} aria-describedby="message-error"></textarea><span id="message-error" class="field-error" hidden></span></div>
+  <div class="honeypot" aria-hidden="true"><label for="website">{t.form.fields.website.label}</label><input id="website" name="website" type="text" tabindex="-1" autocomplete="off" /></div>
+  <p class="form-note">{t.form.required}</p><p class="form-note">{t.form.privacyBefore} <a href={pagePath(locale,'privacy')}>{t.form.privacyLink}</a>{t.form.privacyAfter}</p>
+  <div class="form-status" id="form-status" tabindex="-1" role="status" aria-live="polite" hidden></div>
+  <button class="button form-submit" type="submit"><span>{t.form.submit}</span><Icon name="arrow-right" /></button>
+  <script type="application/json" id="form-translations" set:html={JSON.stringify(t.form).replace(/</g,'\\u003c')} />
+</form>
+<script src="../scripts/contact.ts"></script>

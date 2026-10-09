@@ -1,13 +1,13 @@
 # TvujKarel.cz — zadání webu pro programátora
 
-Verze: 1.3\
+Verze: 1.4\
 Datum: 9. 10. 2026\
 Jazyky webu: čeština (`cs`), angličtina (`en`), ruština (`ru`); výchozí jazyk čeština.\
 Zadavatel a poskytovatel služby: Lukáš Niedoba, IČO 06838103
 
 ## 1. Cíl projektu
 
-Vytvořit rychlý, přehledný a osobní web značky **Tvůj Karel** pro pomoc s počítači a technikou přímo u zákazníka v Praze. Cílovou skupinou jsou domácnosti a malé kanceláře, které potřebují konkrétní problém vyřešit a nechtějí studovat technické návody.
+Vytvořit rychlý, přehledný a přátelský web značky **Tvůj Karel** pro pomoc s počítači a technikou přímo u zákazníka v Praze. Cílovou skupinou jsou domácnosti a malé kanceláře, které potřebují konkrétní problém vyřešit a nechtějí studovat technické návody.
 
 Návštěvník má během 20 sekund pochopit službu, najít cenu a zavolat nebo napsat. Primární konverze je telefonát; sekundární je zpráva nebo odeslání poptávkového formuláře.
 
@@ -20,13 +20,13 @@ MVP: jedna hlavní stránka, stránka ochrany osobních údajů, funkční konta
 - Claim: **Když technika neposlouchá.**
 - Hlavní vysvětlení služby: **Pomoc s počítačem a technikou přímo u vás v Praze.**
 - Tón: lidský, klidný, srozumitelný; zákazníkovi vykat.
-- Používat první osobu jednotného čísla. Nevyvolávat dojem call centra nebo týmu techniků.
-- Karel je název značky. Skutečný poskytovatel se představuje jako Lukáš; nevytvářet fiktivní osobu Karla ani její reference.
+- Veřejné texty stavět na značce **Tvůj Karel** a přínosu služby, bez osobního medailonku zadavatele. Používat neutrální formulace nebo název značky; nevyvolávat dojem call centra či týmu techniků.
+- Karel je název značky, nikoli fiktivní osoba. Skutečný poskytovatel Lukáš Niedoba zůstává uvedený v identifikačních údajích v patičce a na stránce ochrany osobních údajů; nepoužívat jeho jméno jako hlavní marketingové sdělení.
 - Neslibovat garantované vyřešení každého problému, okamžitý příjezd ani nepřetržitou dostupnost.
 
 ### 2.1 Jazyky a překlady
 
-- Čeština je výchozí jazyk a zdrojová verze textů v tomto zadání. Při implementaci dodat plnohodnotnou anglickou a ruskou verzi všech veřejných textů: navigace, služeb, postupu, ceníku a podmínek, sekce o mně, FAQ, kontaktu, patičky a ochrany osobních údajů.
+- Čeština je výchozí jazyk a zdrojová verze textů v tomto zadání. Při implementaci dodat plnohodnotnou anglickou a ruskou verzi všech veřejných textů: navigace, služeb, postupu, ceníku a podmínek, sekce o značce, FAQ, kontaktu, patičky a ochrany osobních údajů.
 - Lokalizovat také pole a instrukce formuláře, validační a chybové hlášky, potvrzení odeslání, přístupné názvy ovládacích prvků, alternativní texty obrázků, stránku 404 a SEO metadata. Jazykové varianty mají stejný obsahový a funkční rozsah.
 - Název značky **Tvůj Karel**, skutečná identita poskytovatele, kontakty, služby a číselné hodnoty cen zůstávají společné. Ceny ve všech jazycích uvádět v CZK/Kč; lokalizovat jejich formát a vysvětlení DPH, výjezdu a účtování. Lokalita služby zůstává Praha.
 - Překlady ukládat do repozitáře, bez automatického překládání za běhu. Před spuštěním ověřit jejich úplnost a významovou shodu, zejména u cen a podmínek. Chybějící překlady musí zablokovat produkční build.
@@ -56,7 +56,7 @@ Ceny včetně DPH zobrazovat jako hlavní, dobře viditelné hodnoty. Ceny bez D
 | Výjezd v městské části Praha 6 | 390 Kč | 322,31 Kč | Jednorázově za návštěvu. |
 | Výjezd do ostatních částí Prahy | 690 Kč | 570,25 Kč | Jednorázově za návštěvu. |
 
-Pod ceníkem uvést: **Účtuji každou započatou půlhodinu. Minimální cena práce je 726 Kč včetně DPH (600 Kč bez DPH).**
+Pod ceníkem uvést: **Účtování po každé započaté půlhodině. Minimální cena práce je 726 Kč včetně DPH (600 Kč bez DPH).**
 
 Ceny bez DPH u paušálů za výjezd jsou zaokrouhlené na dvě desetinná místa.
 
@@ -81,13 +81,13 @@ Ve veřejném ceníku prezentovat jednu hodinovou sazbu práce a dva paušály z
 
 ## 5. Struktura a obsah hlavní stránky
 
-Pořadí sekcí: hlavička → úvod → služby → postup → ceník → o mně → FAQ → kontakt → patička.
+Pořadí sekcí: hlavička → úvod → o značce → služby → postup → ceník → FAQ → kontakt → patička.
 
 Níže uvedené texty jsou českou zdrojovou verzí. V angličtině a ruštině zachovat stejné pořadí sekcí, význam a konverzní cíle podle oddílu 2.1.
 
 ### 5.1 Hlavička
 
-Textové logo Tvůj Karel, kotvy S čím pomohu / Jak to funguje / Ceník / O mně / Kontakt a výrazné tlačítko Zavolat. Na mobilu jednoduché přístupné menu.
+Textové logo Tvůj Karel, kotvy Služby / Jak to funguje / Ceník / O značce / Kontakt a výrazné tlačítko Zavolat. Na mobilu jednoduché přístupné menu.
 
 V hlavičce všech stránek přístupný přepínač **Čeština / English / Русский**, dostupný i na mobilu. Použít běžné odkazy na odpovídající stránku v jiném jazyce a označit aktuální jazyk; nepoužívat samotné vlajky. Přepnutí zachová typ stránky a u hlavní stránky také kotvu sekce, pokud je přítomná. Navigace a odkaz na soukromí vždy vedou na variantu v aktuálním jazyce.
 
@@ -99,27 +99,27 @@ Claim: **Když technika neposlouchá.**
 
 Text:
 
-> Nefunguje Wi-Fi, tiskárna nebo potřebujete nastavit nový notebook? Přijedu k vám domů nebo do kanceláře, pomohu s problémem a vše srozumitelně vysvětlím.
+> Nefunguje Wi-Fi, tiskárna nebo potřebujete nastavit nový notebook? Tvůj Karel pomůže s technikou u vás doma i v kanceláři. Srozumitelně a bez zbytečných starostí.
 
 Primární tlačítko: **Zavolat**. Sekundární: **Popsat problém**, odkaz na formulář.
 
-Cenový údaj: **1 452 Kč/h včetně DPH**; doplňkově „1 200 Kč bez DPH“.
-
-Pod cenou menší text: „Účtuji každou započatou půlhodinu, minimálně 726 Kč za práci. Výjezd: Praha 6 za 390 Kč, ostatní Praha za 690 Kč. Vše včetně DPH.“
+V úvodu nezobrazovat hodinovou sazbu, minimální cenu práce, paušály za výjezd ani údaje o DPH a účtování. Číselné ceny a podmínky patří do sekce **Ceník** podle oddílu 5.5; z hlavičky musí být snadno dostupná.
 
 Doplňkové body: Praha / Domácnosti i malé firmy / Srozumitelná cena před návštěvou.
 
-### 5.3 S čím pomohu
+### 5.3 S čím pomůže Tvůj Karel
 
 Šest karet podle tabulky služeb. Každá obsahuje jednoduchou ikonu, název a nejvýše dvě krátké věty. Využít konkrétní problémy zákazníků, například „Tiskárna se nepřipojí k Wi-Fi“ nebo „Potřebuji přesunout fotografie do nového počítače“.
 
 ### 5.4 Jak to funguje
 
 1. **Popíšete problém.** Zavoláte nebo napíšete, co nefunguje a kde v Praze jste.
-2. **Domluvíme návštěvu.** Dohodneme termín a orientační rozsah práce. Vysvětlím účtování a potvrdím cenu výjezdu podle adresy.
-3. **Přijedu a pomohu.** Problém prověřím, provedu domluvené nastavení a vysvětlím další postup.
+2. **Domluvená návštěva.** Před návštěvou znáte termín, orientační rozsah práce, způsob účtování a cenu výjezdu podle adresy.
+3. **Pomoc na místě.** Prověření problému, domluvené nastavení a srozumitelné vysvětlení dalšího postupu.
 
 ### 5.5 Ceník
+
+Při implementaci použít kotvu `#cenik` pro odkazy z hlavičky a FAQ.
 
 Zobrazit tabulku z oddílu 4 s jednou hodinovou sazbou práce a dvěma paušály za výjezd. Pod ní uvést poznámku o účtování každé započaté půlhodiny a minimální ceně práce. Ceny bez DPH zobrazovat doplňkově.
 
@@ -129,28 +129,30 @@ Přidat jednoduchý příklad:
 
 Tlačítko **Domluvit návštěvu** vede na kontakt. Neuvádět pevnou konečnou cenu složitějšího zásahu bez znalosti rozsahu.
 
-### 5.6 O mně
+### 5.6 O značce
 
-Nadpis: **Za Tvým Karlem stojí Lukáš**
+Krátký blok bez osobního medailonku, umístěný hned po úvodu před službami podle referenčního vizuálu.
+
+Nadpis: **Technika v klidu. Bez zbytečných starostí.** V desktopovém návrhu zalomit do dvou řádků.
 
 Návrh textu:
 
-> Jmenuji se Lukáš Niedoba a pracuji jako programátor a IT specialista. Pod značkou Tvůj Karel pomáhám lidem a malým firmám v Praze s počítači a běžnou technikou. Záleží mi na tom, abyste rozuměli tomu, co dělám, a věděli předem, kolik bude pomoc stát.
+> Běžná technika by měla usnadňovat den. Tvůj Karel pomůže s nastavením, připojením i zálohami. Srozumitelně a bez zbytečných složitostí.
 
-Použít skutečnou fotografii zadavatele, pokud ji dodá. Jinak pracovat s typografií a ilustrací zařízení; žádná fotografie vydávaná za skutečného poskytovatele. Nevymýšlet roky praxe, certifikace ani počet zákazníků.
+Použít fotografii techniky a pracovní plochy podle referenčního návrhu. Bez portrétu zadavatele či fiktivního Karla. Nevymýšlet roky praxe, certifikace ani počet zákazníků.
 
 ### 5.7 FAQ
 
 - **Přijedete ke mně domů?** Ano, služba je určena pro domácnosti a malé kanceláře v Praze; konkrétní lokalitu a termín domluvíme předem.
-- **Kolik zaplatím za krátkou návštěvu?** Za práci do 30 minut zaplatíte 726 Kč. S výjezdem je to celkem 1 116 Kč v městské části Praha 6 nebo 1 416 Kč v ostatních částech Prahy. Vše včetně DPH. Při delší práci účtuji každou další započatou půlhodinu za 726 Kč včetně DPH.
-- **Je doprava v ceně?** Výjezd účtuji samostatně: 390 Kč v městské části Praha 6, 690 Kč v ostatních částech Prahy, včetně DPH. Paušál platíte jednou za návštěvu a zahrnuje cestu tam i zpět a běžné parkování. Cenu výjezdu potvrdím před návštěvou.
-- **Opravujete rozbité součástky?** Fyzické opravy hardwaru neposkytuji. Mohu pomoci určit další postup a doporučit servis.
+- **Kolik zaplatím za krátkou návštěvu?** Práce se účtuje po započatých půlhodinách, minimálně 30 minut, a výjezd samostatně. Konkrétní částky a příklady celkové ceny najdete v [ceníku](#cenik).
+- **Je doprava v ceně?** Výjezd se účtuje samostatně podle městské části. Paušál zahrnuje cestu tam i zpět a běžné parkování; jeho cenu znáte před návštěvou. Podrobnosti najdete v [ceníku](#cenik).
+- **Opravujete rozbité součástky?** Fyzické opravy hardwaru nejsou součástí služby. Při podezření na závadu lze určit další postup a doporučit specializovaný servis.
 - **Pomůžete i malé firmě?** Ano, s běžným nastavením počítačů, sítě, tiskáren, účtů a záloh.
-- **Co když problém nepůjde vyřešit na místě?** Vysvětlím zjištění a doporučím další postup. Před návštěvou se domluvíme i na účtování diagnostiky.
+- **Co když problém nepůjde vyřešit na místě?** Součástí pomoci je srozumitelné vysvětlení zjištění a doporučení dalšího postupu. Účtování diagnostiky se domlouvá před návštěvou.
 
 ### 5.8 Kontakt
 
-Telefon jako klikatelné `tel:` číslo, e-mail jako `mailto:`, WhatsApp pouze pokud ho zadavatel potvrdí. Formulář podle oddílu 6. Uvést „Napište mi, co nefunguje. Ozvu se a domluvíme další postup.“ Bez neověřené garance času odpovědi.
+Telefon jako klikatelné `tel:` číslo, e-mail jako `mailto:`, WhatsApp pouze pokud ho zadavatel potvrdí. Formulář podle oddílu 6. Uvést „Popište, co nefunguje. Další postup domluvíme po telefonu nebo e-mailem.“ Bez neověřené garance času odpovědi.
 
 ### 5.9 Patička
 
@@ -166,7 +168,7 @@ Tvůj Karel — Lukáš Niedoba / IČO 06838103 / Plátce DPH / telefon / e-mail
 | Kde v Praze jste | Ano | Část Prahy nebo orientační lokalita, 2–150 znaků; přesná adresa není potřeba. |
 | S čím potřebujete pomoci | Ano | 10–3 000 znaků, víceřádkový vstup. |
 
-Pod formulářem informační věta s odkazem: „Údaje použiji k vyřízení vašeho požadavku. Podrobnosti najdete v zásadách ochrany osobních údajů.“ Nevytvářet marketingový souhlas jako podmínku poptávky.
+Pod formulářem informační věta s odkazem: „Údaje slouží k vyřízení vašeho požadavku. Podrobnosti najdete v zásadách ochrany osobních údajů.“ Nevytvářet marketingový souhlas jako podmínku poptávky.
 
 Pole, informační větu, průběh odesílání a všechny výsledkové hlášky přeložit do aktuálního jazyka stránky. Odkaz na zásady ochrany osobních údajů vede na stejnou jazykovou variantu.
 
@@ -182,20 +184,20 @@ Pole, informační větu, průběh odesílání a všechny výsledkové hlášky
 - Kontrolovat povolený origin, bezpečně zpracovat text a zabránit vkládání hlaviček e-mailu.
 - Při odesílání zablokovat opakované kliknutí a ukázat stav.
 - Úspěch zobrazit až po potvrzení přijetí e-mailovým poskytovatelem; netvrdit, že e-mail byl doručen do schránky.
-- Úspěšná zpráva: „Děkuji, požadavek byl odeslán. Ozvu se a domluvíme další postup.“
+- Úspěšná zpráva: „Požadavek byl odeslán. Další postup domluvíme po telefonu nebo e-mailem.“
 - Při chybě zachovat vyplněná data, umožnit opakování a nabídnout telefon/e-mail.
 - Žádné přílohy v MVP, žádné ukládání poptávek do databáze.
 - Nelogovat celý obsah poptávek ani kontaktní údaje. Tajné klíče pouze na serveru.
 
 ## 7. Design a mobilní chování
 
-Čistý, moderní a osobní styl. Světlé pozadí, tmavý dobře čitelný text a jeden výrazný akcent. Přátelskost vyjádřit typografií a jemnou ilustrací notebooku či Wi-Fi. Vyhnout se neonům, serverovým rackům a stock fotografiím operátorů.
+Schválený směr **Organic Editorial** podle [referenčních vizuálů](docs/design/README.md): krémový světlý režim a hluboký zelený tmavý režim, výrazná serifová typografie, organické výřezy fotografií techniky a jemné ruční poznámky. Přátelský tón stavět na značce a srozumitelné službě. Vyhnout se neonům, serverovým rackům a stock fotografiím operátorů.
 
 - Mobile-first; ověřit šířky 360, 390, 768, 1 024 a 1 440 px.
 - Přehledný obsah bez horizontálního posouvání.
 - Na mobilu spodní panel **Zavolat / Napsat**; Napsat vede na formulář, případně na potvrzený WhatsApp.
 - Panel nesmí překrývat obsah, formulář ani systémovou oblast telefonu; zohlednit safe-area.
-- Výrazné ceny, dostatečné mezery a krátké odstavce.
+- Výrazné ceny v sekci Ceník, dostatečné mezery a krátké odstavce; v úvodu žádné číselné ceny.
 - Viditelný focus, ovládání klávesnicí, správné labely a přístupné chybové zprávy.
 - Kontrast na úrovni WCAG AA, dotykové cíle doporučeně alespoň 44 × 44 px.
 - Respektovat `prefers-reduced-motion`; bez automatických carouselů a rušivých animací.
@@ -331,7 +333,7 @@ Online rezervace termínů, platby, zákaznický portál, CRM, CMS, blog, firemn
 - Sídlo, případné další požadované identifikační údaje a fakturační údaje.
 - Pravidla placené diagnostiky.
 - Reálná dostupnost; bez vyplnění neuvádět otevírací dobu.
-- Fotografie a souhlas s jejím použitím, nebo schválení verze bez portrétu.
+- Finální fotografie techniky a oprávnění k jejich použití; osobní portrét není součástí návrhu.
 - Přístup k doméně/DNS, cílový AWS účet, DNS varianta a schválený provozní rozpočet; architektura hostingu je stanovena v oddílu 8.1.
 - Ověření odesílací domény v SES, ověřený příjemce v sandboxu nebo production access, nastavení uchování poptávek a logů.
 - Schválení veřejných textů a ochrany osobních údajů ve všech třech jazycích.
@@ -342,7 +344,8 @@ Chybějící údaje v náhledu označit jako konfigurační placeholdery. Produk
 
 - [ ] Hlavní stránka, ochrana osobních údajů, navigace, formulář, všechny stavy, stránka 404 a přístupné popisky jsou kompletní v češtině, angličtině a ruštině již v MVP; produkční build odmítne chybějící překlady.
 - [ ] `/cs/`, `/en/`, `/ru/` a stránky soukromí jsou přímo dostupné; `/` vrací HTTP 308 na `/cs/` a přepínač jazyka zachovává odpovídající stránku a kotvu.
-- [ ] Značka Tvůj Karel a skutečný poskytovatel Lukáš Niedoba jsou srozumitelně odlišeni.
+- [ ] Veřejná prezentace staví na značce Tvůj Karel, bez osobního medailonku; skutečný poskytovatel Lukáš Niedoba je uvedený v patičce a na stránce ochrany osobních údajů.
+- [ ] Úvod neobsahuje číselné ceny, údaje o DPH ani podmínky účtování; kompletní ceník je dostupný z hlavičky.
 - [ ] Hodinová sazba, účtování po započatých půlhodinách, půlhodinové minimum a oba paušály za výjezd jsou konzistentní ve všech sekcích a jazycích; příklady uvádějí správné celkové ceny včetně výjezdu a DPH.
 - [ ] Web nenabízí fyzické opravy ani nepotvrzené služby.
 - [ ] Telefon, e-mail, případně WhatsApp a všechny navigační odkazy fungují.

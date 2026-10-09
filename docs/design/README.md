@@ -24,6 +24,8 @@ Ikona slunce vpravo v hlavičce představuje přepnutí do světlého režimu.
 - Zachovat výraznou cenu a hlavní akci **Zavolat** v úvodu.
 - Služby zobrazovat jako přehledné položky na společné ploše, bez samostatných velkých karet.
 - Typografický směr: Fraunces pro výrazné nadpisy a Manrope pro běžný text a ovládací prvky.
+- První verze webu obsahuje češtinu, angličtinu a ruštinu včetně přepínače **Čeština / English / Русский**. České texty v referenčních obrázcích jsou výchozí verzí; rozložení musí pojmout delší překlady v obou režimech.
+- U použitých fontů a řezů ověřit českou diakritiku i cyrilici; pro ruštinu případně zvolit odpovídající font, který zachová typografický styl návrhu.
 - Při implementaci ověřit kontrast, ovládání klávesnicí a mobilní rozložení v obou režimech.
 
 PNG soubory jsou schválené návrhy vytvořené pomocí ImageGen. Slouží jako vizuální reference; veřejné texty a rozsah služeb mají odpovídat zadání webu.

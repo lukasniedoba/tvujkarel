@@ -15,7 +15,13 @@
     "test": "node --import tsx --test tests/*.test.ts",
     "test:e2e": "playwright test",
     "check:production": "node --import tsx scripts/check-production.ts",
-    "build:production": "npm run check:production && npm run build"
+    "build:production": "npm run check:production && npm run build",
+    "build:infra": "node scripts/build-infra.mjs",
+    "infra:synth": "npm run build:infra && cdk synth",
+    "infra:diff": "cdk diff TvujKarelHosting --no-change-set",
+    "deploy:certificate": "node scripts/deploy-preview.mjs certificate",
+    "deploy:preview": "node scripts/deploy-preview.mjs deploy",
+    "deploy:verify": "node scripts/verify-deployment.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-sesv2": "^3.1148.0",
@@ -31,7 +37,11 @@
     "@axe-core/playwright": "^4.13.0",
     "@playwright/test": "^1.64.0",
     "@types/node": "^26.6.4",
+    "aws-cdk": "^2.1145.0",
+    "aws-cdk-lib": "^2.273.0",
     "chrome-launcher": "1.2.2",
+    "constructs": "^10.8.1",
+    "esbuild": "^0.28.2",
     "lighthouse": "^13.5.0",
     "prettier": "^3.9.9",
     "prettier-plugin-astro": "^1.1.1",

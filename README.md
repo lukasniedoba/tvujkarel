@@ -2,7 +2,7 @@
 
 Web služby pomoci s počítači a technikou v Praze: Astro + TypeScript, společné komponenty a české, anglické a ruské texty. Zadání je v [TvujKarel_zadani_webu.md](TvujKarel_zadani_webu.md), schválený vizuální směr a mockupy v [docs/design](docs/design/README.md).
 
-Aktuální rozsah webu je **lokální implementace a ověřování**. Nasazení je na přání zadavatele odložené. Registrace domény a DNS byly samostatně přesunuty do projektového AWS účtu; web tím nebyl zveřejněný. Chybějící reálné kontakty a údaje správce zůstávají viditelně označené v náhledu; nejsou nahrazené smyšlenými údaji.
+Na [tvujkarel.cz](https://tvujkarel.cz) je nasazený **neindexovaný náhled na produkční infrastruktuře** s vypnutým odesíláním formuláře. HTTPS, všechny tři jazyky, přesměrování, 404 a formulář prošly 23 živými kontrolami; [doklad nasazení](docs/verification/deployment.md) uvádí skutečný stav. CDK stack, deploy skripty, CI přes OIDC a postup návratu jsou popsané v [dokumentaci nasazení](docs/deployment.md). Chybějící reálné kontakty a údaje správce zůstávají viditelně označené v náhledu; nejsou nahrazené smyšlenými údaji. Plné spuštění vyžaduje doplnění údajů, schválení obsahu a skutečné ověření doručení.
 
 ## Přístup do AWS
 
@@ -11,9 +11,9 @@ Projekt má dva AWS účty ve stejné AWS Organization jako Naraveya a použív�
 1. [Přihlaste se do AWS přes společný SSO portál](https://d-99674d1ef0.awsapps.com/start/) uživatelským jménem `niedoba.lukas_management`.
 2. Vyberte požadovaný účet a otevřete jeho AWS Management Console.
 
-| AWS účet | ID účtu | Účel |
-|---|---|---|
-| `tvujkarel-dns` | `890192513455` | Registrace domény a autoritativní Route 53 DNS zóna |
+| AWS účet         | ID účtu        | Účel                                                                  |
+| ---------------- | -------------- | --------------------------------------------------------------------- |
+| `tvujkarel-dns`  | `890192513455` | Registrace domény a autoritativní Route 53 DNS zóna                   |
 | `tvujkarel-prod` | `541855874226` | Produkční hosting, CloudFront, API Gateway, Lambda, SES a certifikáty |
 
 Pro AWS CLI jsou určené názvy profilů `administrator-tvujkarel-dns` a `administrator-tvujkarel-prod`. Před prvním použitím je nakonfigurujte pomocí `aws configure sso --profile <název-profilu>` se stávající SSO session `naraveya` v regionu `eu-central-1` a odpovídajícím účtem a permission setem.
@@ -28,7 +28,7 @@ aws sts get-caller-identity --profile administrator-tvujkarel-prod
 
 Registrace `tvujkarel.cz` a veřejná Route 53 zóna byly 10. 10. 2026 přesunuty z účtu `005908799433` do `tvujkarel-dns` (`890192513455`). Nová zóna má ID `Z076204315B86GU4PJHXB` a nameservery `ns-1254.awsdns-28.org`, `ns-573.awsdns-07.net`, `ns-1810.awsdns-34.co.uk` a `ns-28.awsdns-03.com`; změna je potvrzená v AWS i registru CZ.NIC. Automatické prodlužování zůstalo zapnuté a expirace je 27. 4. 2027. Existující ověřovací CNAME pro ACM byl zachovaný; zóna nemá záznam směrující web na odstraněný S3 bucket.
 
-Původní zóna `Z03694602CCTUWM9Z9KQA` zůstává dočasně v účtu `005908799433` kvůli DNS cache. Odstranit ji lze nejdříve 12. 10. 2026 po 18:15 CEST, po ověření delegace a shody potřebných záznamů v nové zóně. Hosting, nové certifikáty a první nasazení zůstávají samostatným následným krokem.
+Původní zóna `Z03694602CCTUWM9Z9KQA` zůstává dočasně v účtu `005908799433` kvůli DNS cache. Odstranit ji lze nejdříve 12. 10. 2026 po 18:15 CEST, po ověření delegace a shody potřebných záznamů v nové zóně. Pro resolvery s původní delegací jsou v obou zónách shodné A/AAAA webové aliasy na novou distribuci CloudFront. Nameservery a registrace se tímto deployem neměnily. Nový ACM certifikát pro apex i `www` je vydaný v produkčním účtu v `us-east-1`; jeho validační CNAME jsou v nové DNS zóně.
 
 ## Lokální spuštění
 
@@ -91,17 +91,17 @@ Výchozí lokální provoz nevyžaduje AWS účet ani přístupové klíče. End
 
 Serverová konfigurace je popsaná v `.env.example`. `CONTACT_MODE=ses` **zapíná reálné posílání**; pro současné lokální ověřování ponechte `disabled`. Při budoucím schváleném zapnutí je nutné nastavit `CONTACT_SENDER`, `CONTACT_RECIPIENT`, `CONTACT_ALLOWED_ORIGINS` a `CONTACT_SES_REGION`. Odesílatel musí být ověřený v SES; adresa zákazníka se používá pouze jako Reply-To. AWS přístup bude poskytovat IAM role, případně explicitně zvolený lokální AWS profil; žádné AWS klíče nepatří do veřejné konfigurace nebo klientského buildu.
 
-Limity velikosti požadavku a četnosti jsou konfigurovatelné. Lokální limiter udržuje pouze časově omezené osolené HMAC identifikátory v paměti procesu, nikoli obsah poptávek. Jeho stav není sdílený mezi instancemi; budoucí produkční infrastruktura musí přidat omezení v API Gateway. Formulář nemá přílohy, databázi ani automatické potvrzovací e-maily zákazníkovi. Přijetí zprávy službou SES a skutečné doručení do schránky jsou dvě různá ověření.
+Limity velikosti požadavku a četnosti jsou konfigurovatelné. Lokální limiter udržuje pouze časově omezené osolené HMAC identifikátory v paměti procesu, nikoli obsah poptávek. Jeho stav není sdílený mezi instancemi; CDK přidává API Gateway throttle 2 req/s s burst 5. Formulář nemá přílohy, databázi ani automatické potvrzovací e-maily zákazníkovi. Přijetí zprávy službou SES a skutečné doručení do schránky jsou dvě různá ověření.
 
-## Externí služby a budoucí nasazení
+## Externí služby a nasazení
 
 Lokální sestavení používá fonty dodané přes balíčky `@fontsource` a lokální grafické podklady. Web nemá zapnutou analytiku ani marketingové trackery.
 
-Samostatná následná práce podle zadání zahrne CDK infrastrukturu (privátní S3 s OAC, CloudFront, API Gateway, Lambda, SES), HTTPS, DNS, OIDC pro CI, log retention, monitoring chyb a nákladů. Cílové účty jsou uvedené v sekci [Přístup do AWS](#přístup-do-aws). Ve Frankfurtu mají být S3/API/Lambda/SES; certifikát CloudFront v `us-east-1`. Provozní rozpočet a první nasazení vyžadují domluvu před vytvářením prostředků. Aktuální odhad nákladů se před tím musí ověřit; tento README nepotvrzuje žádnou cenu služeb.
+CDK v `infra/app.ts` definuje privátní S3 s OAC, CloudFront, API Gateway, Lambdu, DNS aliasy, OIDC pro CI, uchování logů, provozní alarmy a AWS Budget. S3/API/Lambda jsou ve Frankfurtu; certifikát CloudFront v `us-east-1`. SES je v náhledu vypnuté a role nemá oprávnění odesílat. [Dokumentace nasazení](docs/deployment.md) obsahuje konkrétní stack, odhad nákladů, příkazy, bezpečnostní hranice a rollback. Provozní rozpočet musí být schválený před vytvářením účtovaných prostředků; AWS Budget pouze upozorňuje a není tvrdý strop.
 
-Před zveřejněním je dále třeba ověřit SES doménu a příjemce, DKIM a soulad SPF/DMARC se skutečnou schránkou, nastavit reálné uchování a schválit veřejné texty. Následuje kontrola skutečných HTTP přesměrování, 404, všech jazykových URL, SEO a formuláře přes CloudFront. Živé odeslání musí odděleně ověřit přijetí v SES a doručení zprávy včetně cyrilice.
+Před zapnutím plné produkce je dále třeba ověřit SES doménu a příjemce, DKIM a soulad SPF/DMARC se skutečnou schránkou, nastavit reálné uchování a schválit veřejné texty. Náhled už má ověřené skutečné HTTP přesměrování, 404, všechny jazykové URL a vypnutý formulář přes CloudFront. Živé odeslání musí odděleně ověřit přijetí v SES a doručení zprávy včetně cyrilice.
 
-Postup nasazení a návratu na předchozí verzi bude doplněn až s konkrétní infrastrukturou. Má uchovat předchozí statický build a verzi Lambdy, obnovit je jako celek a invalidovat změněné HTML i sitemapu. CDK, OIDC a cloudový rollback nyní nejsou vydávané za dokončené.
+Nasazení uchovává cloud assembly s konkrétním statickým buildem a Lambda balíčkem v ignorovaném `.deployment/releases/`. Opětovný deploy předchozí assembly obnoví celek a invaliduje CloudFront. GitHub environment `production`, pravidla schvalování, secrets a variables jsou nastavené a ověřené. CI workflow je součástí repozitáře a spouští se manuálně přes GitHub Actions; první běh zatím neproběhl. Rollback není označený za živě ověřený, dokud nebyl skutečně provedený.
 
 ## Stav ověření
 

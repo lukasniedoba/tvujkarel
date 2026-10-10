@@ -7,4 +7,7 @@ dist/
 playwright-report/
 test-results/
 cdk.out/
+build/
+.deployment/
+cdk.context.json
 .DS_Store

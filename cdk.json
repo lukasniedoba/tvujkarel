@@ -1,0 +1,10 @@
+{
+  "app": "node --import tsx infra/app.ts",
+  "notices": false,
+  "versionReporting": false,
+  "context": {
+    "cli-telemetry": false,
+    "@aws-cdk/core:checkSecretUsage": true,
+    "@aws-cdk/aws-s3:serverAccessLogsUseBucketPolicy": true
+  }
+}

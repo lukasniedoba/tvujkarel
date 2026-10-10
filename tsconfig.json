@@ -1,5 +1,13 @@
 {
   "extends": "astro/tsconfigs/strict",
   "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist", "node_modules", "cdk.out", "playwright-report", "test-results"]
+  "exclude": [
+    "dist",
+    "build",
+    "node_modules",
+    "cdk.out",
+    ".deployment",
+    "playwright-report",
+    "test-results"
+  ]
 }

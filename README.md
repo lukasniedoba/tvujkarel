@@ -2,7 +2,7 @@
 
 Web služby pomoci s počítači a technikou v Praze: Astro + TypeScript, společné komponenty a české, anglické a ruské texty. Zadání je v [TvujKarel_zadani_webu.md](TvujKarel_zadani_webu.md), schválený vizuální směr a mockupy v [docs/design](docs/design/README.md).
 
-Aktuální rozsah je **lokální implementace a ověřování**. Nasazení je na přání zadavatele odložené. Tato práce nevytváří AWS prostředky, nemění DNS a nezveřejňuje web. Chybějící reálné kontakty a údaje správce zůstávají viditelně označené v náhledu; nejsou nahrazené smyšlenými údaji.
+Aktuální rozsah webu je **lokální implementace a ověřování**. Nasazení je na přání zadavatele odložené. Registrace domény a DNS byly samostatně přesunuty do projektového AWS účtu; web tím nebyl zveřejněný. Chybějící reálné kontakty a údaje správce zůstávají viditelně označené v náhledu; nejsou nahrazené smyšlenými údaji.
 
 ## Přístup do AWS
 
@@ -26,7 +26,9 @@ aws sts get-caller-identity --profile administrator-tvujkarel-dns
 aws sts get-caller-identity --profile administrator-tvujkarel-prod
 ```
 
-Účty jsou založené; tabulka popisuje jejich určení, nikoli potvrzení přesunu domény nebo nasazení prostředků. Infrastruktura a první nasazení zůstávají samostatným následným krokem.
+Registrace `tvujkarel.cz` a veřejná Route 53 zóna byly 10. 10. 2026 přesunuty z účtu `005908799433` do `tvujkarel-dns` (`890192513455`). Nová zóna má ID `Z076204315B86GU4PJHXB` a nameservery `ns-1254.awsdns-28.org`, `ns-573.awsdns-07.net`, `ns-1810.awsdns-34.co.uk` a `ns-28.awsdns-03.com`; změna je potvrzená v AWS i registru CZ.NIC. Automatické prodlužování zůstalo zapnuté a expirace je 27. 4. 2027. Existující ověřovací CNAME pro ACM byl zachovaný; zóna nemá záznam směrující web na odstraněný S3 bucket.
+
+Původní zóna `Z03694602CCTUWM9Z9KQA` zůstává dočasně v účtu `005908799433` kvůli DNS cache. Odstranit ji lze nejdříve 12. 10. 2026 po 18:15 CEST, po ověření delegace a shody potřebných záznamů v nové zóně. Hosting, nové certifikáty a první nasazení zůstávají samostatným následným krokem.
 
 ## Lokální spuštění
 
@@ -115,4 +117,4 @@ PLAYWRIGHT_BASE_URL=http://127.0.0.1:4322 npm run test:e2e
 node scripts/audit-lighthouse.mjs --url http://127.0.0.1:4322 --desktop-locales cs
 ```
 
-Lokálně byl ověřen i produkční validátor: výchozí náhledovou konfiguraci odmítl, úplnou syntetickou konfiguraci přijal a neplatné varianty odmítl. Přímý build s produkčním režimem a chybějícími údaji rovněž skončil očekávanou chybou. Tyto kontroly neprovedly síťové volání ani odeslání zprávy. Živé SES, doručení e-mailů, DNS, CloudFront a placené cloudové služby nebyly v rámci lokálního zadání ověřovány. Produkční Lighthouse a skutečné Safari / mobilní prohlížeče vyžadují samostatné měření; automatizovaný WebKit a simulace rozměrů je nenahrazují.
+Lokálně byl ověřen i produkční validátor: výchozí náhledovou konfiguraci odmítl, úplnou syntetickou konfiguraci přijal a neplatné varianty odmítl. Přímý build s produkčním režimem a chybějícími údaji rovněž skončil očekávanou chybou. Tyto kontroly neprovedly síťové volání ani odeslání zprávy. Živé SES, doručení e-mailů a CloudFront nebyly v rámci lokálního zadání ověřovány. Samostatný přesun registrace a DNS je popsaný v sekci Přístup do AWS; nová zóna i záznam ACM mají stav `INSYNC` a odpovědi NS/CNAME byly ověřené přes Route 53 `test-dns-answer`. Produkční Lighthouse a skutečné Safari / mobilní prohlížeče vyžadují samostatné měření; automatizovaný WebKit a simulace rozměrů je nenahrazují.

@@ -4,6 +4,30 @@ Web služby pomoci s počítači a technikou v Praze: Astro + TypeScript, spole�
 
 Aktuální rozsah je **lokální implementace a ověřování**. Nasazení je na přání zadavatele odložené. Tato práce nevytváří AWS prostředky, nemění DNS a nezveřejňuje web. Chybějící reálné kontakty a údaje správce zůstávají viditelně označené v náhledu; nejsou nahrazené smyšlenými údaji.
 
+## Přístup do AWS
+
+Projekt má dva AWS účty ve stejné AWS Organization jako Naraveya a používá společný IAM Identity Center (SSO). Samostatný preprod účet se pro tento projekt nepoužívá.
+
+1. [Přihlaste se do AWS přes společný SSO portál](https://d-99674d1ef0.awsapps.com/start/) uživatelským jménem `niedoba.lukas_management`.
+2. Vyberte požadovaný účet a otevřete jeho AWS Management Console.
+
+| AWS účet | ID účtu | Účel |
+|---|---|---|
+| `tvujkarel-dns` | `890192513455` | Registrace domény a autoritativní Route 53 DNS zóna |
+| `tvujkarel-prod` | `541855874226` | Produkční hosting, CloudFront, API Gateway, Lambda, SES a certifikáty |
+
+Pro AWS CLI jsou určené názvy profilů `administrator-tvujkarel-dns` a `administrator-tvujkarel-prod`. Před prvním použitím je nakonfigurujte pomocí `aws configure sso --profile <název-profilu>` se stávající SSO session `naraveya` v regionu `eu-central-1` a odpovídajícím účtem a permission setem.
+
+Před každým nasazením ověřte identitu a porovnejte vrácené ID účtu s tabulkou výše:
+
+```sh
+aws sso login --profile administrator-tvujkarel-prod
+aws sts get-caller-identity --profile administrator-tvujkarel-dns
+aws sts get-caller-identity --profile administrator-tvujkarel-prod
+```
+
+Účty jsou založené; tabulka popisuje jejich určení, nikoli potvrzení přesunu domény nebo nasazení prostředků. Infrastruktura a první nasazení zůstávají samostatným následným krokem.
+
 ## Lokální spuštění
 
 Použijte Node.js 22.19 nebo novější a npm. Závislosti jsou zamčené v `package-lock.json`.
@@ -69,9 +93,9 @@ Limity velikosti požadavku a četnosti jsou konfigurovatelné. Lokální limite
 
 ## Externí služby a budoucí nasazení
 
-Lokální sestavení používá fonty dodané přes balíčky `@fontsource` a lokální grafické podklady. Web nemá zapnutou analytiku ani marketingové trackery. Provozní konfigurace žádného nového externího účtu se nyní nevytváří.
+Lokální sestavení používá fonty dodané přes balíčky `@fontsource` a lokální grafické podklady. Web nemá zapnutou analytiku ani marketingové trackery.
 
-Samostatná následná práce podle zadání zahrne CDK infrastrukturu (privátní S3 s OAC, CloudFront, API Gateway, Lambda, SES), HTTPS, DNS, OIDC pro CI, log retention, monitoring chyb a nákladů. Ve Frankfurtu mají být S3/API/Lambda/SES; certifikát CloudFront v `us-east-1`. Konkrétní AWS účet, DNS varianta, provozní rozpočet a první nasazení vyžadují domluvu před vytvářením prostředků. Aktuální odhad nákladů se před tím musí ověřit; tento README nepotvrzuje žádnou cenu služeb.
+Samostatná následná práce podle zadání zahrne CDK infrastrukturu (privátní S3 s OAC, CloudFront, API Gateway, Lambda, SES), HTTPS, DNS, OIDC pro CI, log retention, monitoring chyb a nákladů. Cílové účty jsou uvedené v sekci [Přístup do AWS](#přístup-do-aws). Ve Frankfurtu mají být S3/API/Lambda/SES; certifikát CloudFront v `us-east-1`. Provozní rozpočet a první nasazení vyžadují domluvu před vytvářením prostředků. Aktuální odhad nákladů se před tím musí ověřit; tento README nepotvrzuje žádnou cenu služeb.
 
 Před zveřejněním je dále třeba ověřit SES doménu a příjemce, DKIM a soulad SPF/DMARC se skutečnou schránkou, nastavit reálné uchování a schválit veřejné texty. Následuje kontrola skutečných HTTP přesměrování, 404, všech jazykových URL, SEO a formuláře přes CloudFront. Živé odeslání musí odděleně ověřit přijetí v SES a doručení zprávy včetně cyrilice.
 
